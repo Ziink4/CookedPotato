@@ -1,0 +1,9 @@
+def test(x, y) {
+  if (x < y) {
+    return x;
+  } else {
+    return y;
+  }
+}
+
+test(4, 7);
