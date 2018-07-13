@@ -3,3 +3,6 @@ lexer
 
 # Visual Studio Code
 .vscode
+
+# Rust
+target/
