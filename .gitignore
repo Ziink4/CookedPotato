@@ -6,3 +6,4 @@ lexer
 
 # Rust
 target/
+Cargo.lock
