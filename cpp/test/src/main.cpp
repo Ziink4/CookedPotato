@@ -1,9 +1,10 @@
 #include <potato-engine/engine.h>
 
 #define CATCH_CONFIG_MAIN
+#define CATCH_CONFIG_PREFIX_ALL
 #include <catch2/catch.hpp>
 
-TEST_CASE("Print Test", "[print]")
+CATCH_TEST_CASE("Print Test", "[print]")
 {
-	CHECK_NOTHROW(print_fancy());
+	CATCH_CHECK_NOTHROW(print_fancy());
 }
