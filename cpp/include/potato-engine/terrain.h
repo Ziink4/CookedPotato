@@ -10,11 +10,11 @@ namespace engine
 
 enum class CellType
 {
-    Empty,
-    Player,
-    Monster,
-    Decor,
-    Obstacle,
+    empty,
+    player,
+    monster,
+    decor,
+    obstacle,
 };
 
 struct Cell

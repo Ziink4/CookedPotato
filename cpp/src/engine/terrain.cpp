@@ -27,11 +27,20 @@ std::ostream& operator<<(std::ostream& out, const terrain::Terrain& t) noexcept
 			pt.x = col;
 			switch (t[terrain::get_cell(pt)].type)
 			{
-				case CellType::Empty:
+				case CellType::empty:
 					out << white;
 					break;
-				default:
+				case CellType::player:
+					out << square;
+					break;
+				case CellType::monster:
+					out << dot;
+					break;
+				case CellType::decor:
 					out << black;
+					break;
+				case CellType::obstacle:
+					out << split;
 					break;
 			}
 
@@ -42,35 +51,6 @@ std::ostream& operator<<(std::ostream& out, const terrain::Terrain& t) noexcept
 	}
 
 	return out << std::endl;
-
-
-	/*
-
-	// Loop through every cell from top to bottom and left to right
-	for y in 0..terrain::TERRAIN_HEIGHT {
-		// Store the current position in the map as Point
-		let mut pt = terrain::Point {x: 0, y: y};
-
-		if y % 2 == 1 {
-			print!("  ");
-		}
-
-		for x in 0..terrain::TERRAIN_WIDTH {
-			pt.x = x;
-			match t[terrain::get_cell(&pt)] {
-				terrain::Cell::Empty    => print!("{}   ", WHITE),
-				terrain::Cell::Player   => print!("{}   ", SQUARE),
-				terrain::Cell::Monster  => print!("{}   ", DOT),
-				terrain::Cell::Decor    => print!("{}   ", BLACK),
-				terrain::Cell::Obstacle => print!("{}   ", SPLIT),
-			}
-		}
-		println!("");
-	}
-	println!("");
-
-	return out << "Point(" << pt.x << ", " << pt.y << ")";
-	*/
 }
 
 }

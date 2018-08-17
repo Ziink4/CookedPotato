@@ -1,5 +1,6 @@
 #include <potato-engine/engine.h> // For engine::print_fancy
 #include <potato-engine/terrain.h> // For engine::Terrain
+#include <potato-engine/rng.h> // For engine::RandomNumberGenerator
 
 #define CATCH_CONFIG_MAIN
 #define CATCH_CONFIG_PREFIX_ALL
@@ -47,3 +48,11 @@ CATCH_TEST_CASE("Print Terrain")
 	constexpr engine::terrain::Terrain t{};
 	CATCH_CHECK_NOTHROW(std::cout << t << std::endl);
 }
+
+CATCH_TEST_CASE("Generate Terrain")
+{
+	engine::RandomNumberGenerator rng(engine::RandomNumberGenerator::fixedSeed);
+	const engine::terrain::Terrain t = generate_terrain(rng);
+	CATCH_CHECK_NOTHROW(std::cout << t << std::endl);
+}
+
