@@ -1,38 +1,39 @@
 extern crate rand;
 use rand::Rng;
-
 use std::collections::HashSet;
-
 mod terrain;
 
-fn main() {
-    // Creates empty terrain
-    let mut t: [terrain::Cell; terrain::AREA] = [terrain::Cell::Empty; terrain::AREA];
-    let mut avail_cells: HashSet<usize> = (0..terrain::AREA).collect();
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn main() {
+        // Creates empty terrain
+        let mut t: [terrain::Cell; terrain::AREA] = [terrain::Cell::Empty; terrain::AREA];
+        let mut avail_cells: HashSet<usize> = (0..terrain::AREA).collect();
 
-    // Populates decor
-    generate_decor(&mut t, &mut avail_cells);
+        // Populates decor
+        generate_decor(&mut t, &mut avail_cells);
 
-    // Prints map
-    print_terrain_ascii(&t);
+        // Prints map
+        print_terrain_ascii(&t);
 
-    // Computes spawn position (TBI)
-    split_field(&mut t, &avail_cells, 10);
+        // Computes spawn position (TBI)
+        split_field(&mut t, &avail_cells, 10);
 
-    // Prints map
-    print_terrain_ascii(&t);
-    
-    //println!("{:?} ({})", avail_cells, avail_cells.len());
+        // Prints map
+        print_terrain_ascii(&t);
 
-    // Spawns stuff
-    place_entities();
+        //println!("{:?} ({})", avail_cells, avail_cells.len());
 
-    let game_over: bool = true;
-    while !game_over {
-        do_turn();
+        // Spawns stuff
+        place_entities();
+
+        let game_over: bool = true;
+        while !game_over {
+            do_turn();
+        }
     }
-
-    //println!("{:?} ({})", avail_cells, avail_cells.len());
 }
 
 fn generate_decor(t: &mut [terrain::Cell; terrain::AREA], avail_cells: &mut HashSet<usize>) {
@@ -46,7 +47,7 @@ fn generate_decor(t: &mut [terrain::Cell; terrain::AREA], avail_cells: &mut Hash
     // Implementation of Algorithm R to choose obstacle locations randomly
     // See : https://en.wikipedia.org/wiki/Reservoir_sampling#Algorithm_R
     let mut reservoir: [usize; DECOR_COUNT] = [0; DECOR_COUNT];
-    for kv in avail_cells.iter().enumerate() {        
+    for kv in avail_cells.iter().enumerate() {
         if kv.0 < DECOR_COUNT {
             reservoir[kv.0] = *kv.1;
         } else {
@@ -72,7 +73,7 @@ fn split_field(t : &mut[terrain::Cell; terrain::AREA], avail_cells: &HashSet<usi
     const FLOAT_HEIGHT: f64 = terrain::TERRAIN_HEIGHT as f64;
     const HALF_WIDTH:  f64 = FLOAT_WIDTH  / 2.0;
     const HALF_HEIGHT: f64 = FLOAT_HEIGHT / 2.0;
-    
+
     // Computes the angular region for each split
     let angle_cutoff = 2.0 * std::f64::consts::PI / (split as f64);
 
@@ -93,8 +94,8 @@ fn split_field(t : &mut[terrain::Cell; terrain::AREA], avail_cells: &HashSet<usi
     let end_x = (HALF_WIDTH  + radius_x).floor() as usize;
     let end_y = (HALF_HEIGHT + radius_y).floor() as usize;
 
-    let mut spawn_points = vec![(HashSet::<usize>::new()); split];
-    
+    let mut spawn_points = vec![HashSet::<usize>::new(); split];
+
     // Goes through the map
     for y in start_y..end_y {
         for x in start_x..end_x {
@@ -116,7 +117,7 @@ fn split_field(t : &mut[terrain::Cell; terrain::AREA], avail_cells: &HashSet<usi
                     let part = ((angle / angle_cutoff) as usize) % split;
 
                     spawn_points[part].insert(cell);
-                    
+
                     if part % 2 == 0 {
                         t[terrain::get_cell(&pt)] = terrain::Cell::Monster;
                     } else {
