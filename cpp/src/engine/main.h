@@ -10,4 +10,4 @@ inline void print()
 	std::cerr << "DUH" << std::endl;
 }
 
-}
+} // namespace engine

@@ -7,3 +7,9 @@ lexer
 # Rust
 target/
 Cargo.lock
+
+build-cpp-Desktop_NoQt_Clang-Debug/
+
+cpp/CMakeLists\.txt\.user
+
+cpp/CMakeLists\.txt\.user\.a841497

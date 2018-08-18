@@ -40,19 +40,35 @@ CATCH_TEST_CASE("Check Valid Cell")
 CATCH_TEST_CASE("Print Point")
 {
 	constexpr engine::Point pt{5, 3};
-	CATCH_CHECK_NOTHROW(std::cout << pt << std::endl);
+    std::cout << pt << std::endl;
 }
 
 CATCH_TEST_CASE("Print Terrain")
 {
 	constexpr engine::terrain::Terrain t{};
-	CATCH_CHECK_NOTHROW(std::cout << t << std::endl);
+    std::cout << t << std::endl;
 }
 
 CATCH_TEST_CASE("Generate Terrain")
 {
-	engine::RandomNumberGenerator rng(engine::RandomNumberGenerator::fixedSeed);
-	const engine::terrain::Terrain t = generate_terrain(rng);
-	CATCH_CHECK_NOTHROW(std::cout << t << std::endl);
+    engine::RandomNumberGenerator rng(engine::RandomNumberGenerator::fixed_seed);
+    const engine::terrain::Terrain t = generate_terrain(rng);
+    std::cout << t << std::endl;
 }
 
+CATCH_TEST_CASE("Generate Terrain and Split Field")
+{
+    engine::RandomNumberGenerator rng(engine::RandomNumberGenerator::fixed_seed);
+
+    engine::terrain::Terrain t = generate_terrain(rng);
+    engine::split_field(t, 4);
+    std::cout << t << std::endl;
+
+    t = generate_terrain(rng);
+    engine::split_field(t, 6);
+    std::cout << t << std::endl;
+
+    t = generate_terrain(rng);
+    engine::split_field(t, 8);
+    std::cout << t << std::endl;
+}
