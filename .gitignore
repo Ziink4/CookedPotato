@@ -8,10 +8,7 @@ lexer
 target/
 Cargo.lock
 
-build-cpp-Desktop_NoQt_Clang-Debug/
+# C++
+build*
+cpp/CMakeLists\.txt\.user*
 
-cpp/CMakeLists\.txt\.user
-
-cpp/CMakeLists\.txt\.user\.a841497
-
-build-cpp-Default-Debug/
