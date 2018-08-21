@@ -11,6 +11,7 @@ project(lib${TARGET} VERSION 1.0.0 LANGUAGES CXX)
 add_library(${TARGET}
 	src/engine/main.cpp
 	src/engine/terrain.cpp
+        src/engine/entity.cpp
 )
 
 # Add include directories

@@ -33,12 +33,7 @@ constexpr const char* get_name(CellType type)
     }
 }
 
-std::ostream& operator<<(std::ostream& out, const Point& pt) noexcept
-{
-	return out << "Point(" << pt.x << ", " << pt.y << ")";
-}
-
-std::ostream& operator<<(std::ostream& out, const terrain::Terrain& t) noexcept
+std::ostream& operator<<(std::ostream& out, const Terrain& t) noexcept
 {
     out << "           | ";
 
@@ -50,17 +45,17 @@ std::ostream& operator<<(std::ostream& out, const terrain::Terrain& t) noexcept
 
     out << std::endl;
 
-    Point pt;
+    Terrain::point_type pt;
 
-    for (pt.y = 0; pt.y < terrain::height; ++pt.y)
+    for (pt.y = 0; pt.y < Terrain::height; ++pt.y)
 	{
         out << " ";
 
         if (pt.y % 2 == 1) out << "  ";
 
-        for (pt.x = 0; pt.x < terrain::width; ++pt.x)
+        for (pt.x = 0; pt.x < Terrain::width; ++pt.x)
 		{
-            out << get_symbol(t[terrain::get_cell(pt)].type) << "   ";
+            out << t.data()[Terrain::get_cell(pt)]->type() << "   ";
 		}
 
 		out << std::endl;

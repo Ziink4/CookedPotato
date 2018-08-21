@@ -19,7 +19,7 @@ Terrain generate_terrain(RandomNumberGenerator& rng) noexcept
 	{
         if (distribution(rng.rand()))
         {
-            obstacle.type = CellType::decor;
+            obstacle->;
         }
 	}
 

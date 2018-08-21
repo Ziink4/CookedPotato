@@ -1,5 +1,7 @@
 #pragma once
 
+#include <potato-engine/entity.h>
+
 #include <cstddef> // For std::size_t
 #include <array> // For std::array
 #include <unordered_set> // For std::unordered_set
@@ -22,65 +24,64 @@ struct Cell
     CellType type;
 };
 
-struct Point
+class Terrain
 {
-    std::size_t x;
-    std::size_t y;
+public:
+    using value_type = Entity *;
 
-    constexpr bool operator==(const Point& other) const noexcept
+    using size_type = std::size_t;
+    using point_type = Point<size_type>;
+
+    static constexpr size_type width = 20;
+    static constexpr size_type height = 40;
+    static constexpr size_type area = width * height;
+
+    using storage_type = std::array<value_type, area>;
+
+    static constexpr bool is_valid(size_type cell) noexcept
     {
-        return x == other.x && y == other.y;
+        return cell < area;
     }
 
-    constexpr bool operator!=(const Point& other) const noexcept
+    static constexpr bool is_valid(const point_type& pt) noexcept
     {
-        return x != other.x || y != other.y;
+        return pt.x < width && pt.y < height;
     }
+
+    static constexpr size_type get_x(size_type cell) noexcept
+    {
+        return cell % width;
+    }
+
+    static constexpr size_type get_y(size_type cell) noexcept
+    {
+        return cell / width;
+    }
+
+    static constexpr point_type get_pt(size_type cell) noexcept
+    {
+        return {get_x(cell), get_y(cell)};
+    }
+
+    static constexpr size_type get_cell(const point_type& pt) noexcept
+    {
+        return pt.x + pt.y * width;
+    }
+
+    constexpr storage_type& data() noexcept
+    {
+        return m_data;
+    }
+
+    constexpr const storage_type& data() const noexcept
+    {
+        return m_data;
+    }
+
+    friend std::ostream& operator<<(std::ostream& out, const Terrain& t) noexcept;
+
+private:
+    storage_type m_data;
 };
-
-namespace terrain
-{
-
-constexpr std::size_t width = 20;
-constexpr std::size_t height = 40;
-constexpr std::size_t area = width * height;
-
-using Terrain = std::array<Cell, area>;
-
-constexpr bool is_valid(std::size_t cell) noexcept
-{
-    return cell < area;
-}
-
-constexpr bool is_valid(const Point& pt) noexcept
-{
-    return pt.x < width && pt.y < height;
-}
-
-constexpr std::size_t get_x(std::size_t cell) noexcept
-{
-    return cell % width;
-}
-
-constexpr std::size_t get_y(std::size_t cell) noexcept
-{
-    return cell / width;
-}
-
-constexpr Point get_pt(std::size_t cell) noexcept
-{
-    return {get_x(cell), get_y(cell)};
-}
-
-constexpr std::size_t get_cell(const Point& pt) noexcept
-{
-    return pt.x + pt.y * width;
-}
-
-} // namespace terrain
-
-std::ostream& operator<<(std::ostream& out, const Point& pt) noexcept;
-
-std::ostream& operator<<(std::ostream& out, const terrain::Terrain& t) noexcept;
 
 } // namespace engine

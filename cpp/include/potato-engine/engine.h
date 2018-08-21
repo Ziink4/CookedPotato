@@ -6,10 +6,8 @@
 namespace engine
 {
 
-void print_fancy();
+Terrain generate_terrain(RandomNumberGenerator& rng) noexcept;
 
-terrain::Terrain generate_terrain(RandomNumberGenerator& rng) noexcept;
-
-void split_field(terrain::Terrain& t, std::size_t parts) noexcept;
+void split_field(Terrain& t, std::size_t parts) noexcept;
 
 } // namespace engine
