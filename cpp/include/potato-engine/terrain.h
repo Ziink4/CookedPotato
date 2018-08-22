@@ -1,75 +1,28 @@
 #pragma once
 
 #include <potato-engine/entity.h>
+#include <potato-engine/engine.h>
 #include <potato-engine/point.h>
-
+#include <potato-engine/rng.h>
 
 #include <cstddef> // For std::size_t
 #include <array> // For std::array
-#include <unordered_set> // For std::unordered_set
 #include <ostream> // For operator<<
 #include <memory>
 
 namespace engine
 {
 
-enum class CellType
-{
-	empty,
-	player,
-	monster,
-	decor,
-	obstacle,
-};
-
-struct Cell
-{
-	CellType type;
-};
-
 class Terrain
 {
 public:
-	using value_type = std::unique_ptr<Entity>;
-
 	using size_type = std::size_t;
-	using point_type = Point<size_type>;
-
-	static constexpr size_type width = 20;
-	static constexpr size_type height = 40;
+	static constexpr size_type width = 10;
+	static constexpr size_type height = 20;
 	static constexpr size_type area = width * height;
 
+	using value_type = std::unique_ptr<Entity>;
 	using storage_type = std::array<value_type, area>;
-
-	static constexpr bool is_valid(size_type cell) noexcept
-	{
-		return cell < area;
-	}
-
-	static constexpr bool is_valid(const point_type& pt) noexcept
-	{
-		return pt.x < width && pt.y < height;
-	}
-
-	static constexpr size_type get_x(size_type cell) noexcept
-	{
-		return cell % width;
-	}
-
-	static constexpr size_type get_y(size_type cell) noexcept
-	{
-		return cell / width;
-	}
-
-	static constexpr point_type get_pt(size_type cell) noexcept
-	{
-		return {get_x(cell), get_y(cell)};
-	}
-
-	static constexpr size_type get_cell(const point_type& pt) noexcept
-	{
-		return pt.x + pt.y * width;
-	}
 
 	constexpr storage_type& data() noexcept
 	{
@@ -86,5 +39,39 @@ public:
 private:
 	storage_type m_data;
 };
+
+constexpr bool is_valid(cell_type cell) noexcept
+{
+	return cell < Terrain::area;
+}
+
+constexpr bool is_valid(const point_type& pt) noexcept
+{
+	return pt.x < Terrain::width && pt.y < Terrain::height;
+}
+
+constexpr point_type::value_type get_x(cell_type cell) noexcept
+{
+	return cell % Terrain::width;
+}
+
+constexpr point_type::value_type get_y(cell_type cell) noexcept
+{
+	return cell / Terrain::width;
+}
+
+constexpr point_type get_pt(cell_type cell) noexcept
+{
+	return {get_x(cell), get_y(cell)};
+}
+
+constexpr cell_type get_cell(const point_type& pt) noexcept
+{
+	return pt.x + pt.y * Terrain::width;
+}
+
+Terrain generate_terrain(RandomNumberGenerator& rng) noexcept;
+
+void split_field(Terrain& t, std::size_t parts) noexcept;
 
 } // namespace engine

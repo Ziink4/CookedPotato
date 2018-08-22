@@ -1,21 +1,18 @@
 #include <potato-engine/character.h>
+#include <potato-engine/symbol.h>
 
 namespace engine
 {
 
 std::ostream& Character::print_symbol(std::ostream& out) const noexcept
 {
-	/* static */ constexpr auto white  = "\xE2\x97\x86"; // white diamond
-	/* static */ constexpr auto black  = "\xE2\x97\x87"; // black diamond
-
 	switch (m_type)
 	{
 		case character_type::player:
-			return out << black;
+			return out << black_symbol;
 		case character_type::npc:
-			return out << white;
+			return out << white_symbol;
 	}
-
 }
 
 std::ostream& Character::print_summary(std::ostream& out) const noexcept

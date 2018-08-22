@@ -8,24 +8,21 @@ namespace engine
 template <class T>
 struct Point
 {
-    T x;
-    T y;
+	using value_type = T;
 
-    constexpr bool operator==(const Point& other) const noexcept
-    {
-        return x == other.x && y == other.y;
-    }
+	T x;
+	T y;
 
-    constexpr bool operator!=(const Point& other) const noexcept
-    {
-        return x != other.x || y != other.y;
-    }
+	constexpr bool operator==(const Point& other) const noexcept
+	{
+		return x == other.x && y == other.y;
+	}
 };
 
 template <class T>
 std::ostream& operator<<(std::ostream& out, const Point<T>& pt) noexcept
 {
-        return out << "Point(" << pt.x << ", " << pt.y << ")";
+	    return out << "Point(" << pt.x << ", " << pt.y << ")";
 }
 
 } // namespace engine

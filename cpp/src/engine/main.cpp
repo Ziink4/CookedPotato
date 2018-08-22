@@ -11,7 +11,7 @@ namespace engine
 
 Terrain generate_terrain(RandomNumberGenerator& rng) noexcept
 {
-	static constexpr auto density = 0.1;
+	static constexpr auto density = 0.25;
 	static std::bernoulli_distribution distribution(density);
 
 	Terrain t = {};
@@ -43,19 +43,19 @@ void split_field(Terrain& t, std::size_t parts) noexcept
 	static constexpr auto radius_y = ((2 * Terrain::width) > Terrain::height) ? half_height : width;
 	static constexpr auto radius_x = radius_y / 2.0;
 
-	static constexpr auto start_x = static_cast<std::size_t>(half_width  - radius_x);
-	static constexpr auto start_y = static_cast<std::size_t>(half_height - radius_y);
+	static constexpr auto start_x = static_cast<point_type::value_type>(half_width  - radius_x);
+	static constexpr auto start_y = static_cast<point_type::value_type>(half_height - radius_y);
 
-	static constexpr auto end_x = static_cast<std::size_t>(half_width  + radius_x);
-	static constexpr auto end_y = static_cast<std::size_t>(half_height + radius_y);
+	static constexpr auto end_x = static_cast<point_type::value_type>(half_width  + radius_x);
+	static constexpr auto end_y = static_cast<point_type::value_type>(half_height + radius_y);
 
-	Terrain::point_type pt;
+	point_type pt;
 
 	for (pt.y = start_y; pt.y < end_y; ++pt.y)
 	{
 		for (pt.x = start_x; pt.x < end_x; ++pt.x)
 		{
-			const auto cell = Terrain::get_cell(pt);
+			const auto cell = get_cell(pt);
 
 			// Checks if the current cell is available (we don't want anything to spawn on occupied space)
 			if (!t.data()[cell])

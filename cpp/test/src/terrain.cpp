@@ -1,5 +1,6 @@
 #include <potato-engine/engine.h> // For engine::print_fancy
 #include <potato-engine/terrain.h> // For engine::Terrain
+#include <potato-engine/directions.h>
 #include <potato-engine/rng.h> // For engine::RandomNumberGenerator
 
 #define CATCH_CONFIG_PREFIX_ALL
@@ -9,13 +10,13 @@
 
 CATCH_TEST_CASE("Point-Cell Transforms")
 {
-	constexpr engine::Terrain::point_type pt{5, 3};
-	constexpr engine::Terrain::point_type pt_2 = engine::Terrain::get_pt(engine::Terrain::get_cell(pt));
+	constexpr engine::point_type pt{5, 3};
+	constexpr engine::point_type pt_2 = engine::get_pt(engine::get_cell(pt));
 	static_assert(pt == pt_2);
 	CATCH_CHECK(pt == pt_2);
 
 	constexpr engine::Terrain::size_type cell{37};
-	constexpr engine::Terrain::size_type cell_2 = engine::Terrain::get_cell(engine::Terrain::get_pt(cell));
+	constexpr engine::Terrain::size_type cell_2 = engine::get_cell(engine::get_pt(cell));
 	static_assert(cell == cell_2);
 	CATCH_CHECK(cell == cell_2);
 }
@@ -24,18 +25,18 @@ CATCH_TEST_CASE("Check Valid Cell")
 {
 	// Invalid cell
 	constexpr std::size_t cell_invalid{engine::Terrain::area + 1};
-	static_assert(!engine::Terrain::is_valid(cell_invalid));
-	CATCH_CHECK_FALSE(engine::Terrain::is_valid(cell_invalid));
+	static_assert(!engine::is_valid(cell_invalid));
+	CATCH_CHECK_FALSE(engine::is_valid(cell_invalid));
 
 	// Valid cell
 	constexpr std::size_t cell_valid{engine::Terrain::area - 1};
-	static_assert(engine::Terrain::is_valid(cell_valid));
-	CATCH_CHECK(engine::Terrain::is_valid(cell_valid));
+	static_assert(engine::is_valid(cell_valid));
+	CATCH_CHECK(engine::is_valid(cell_valid));
 }
 
 CATCH_TEST_CASE("Print Point")
 {
-	constexpr engine::Terrain::point_type pt{5, 3};
+	constexpr engine::point_type pt{5, 3};
 	std::cout << pt << std::endl;
 }
 
@@ -67,4 +68,10 @@ CATCH_TEST_CASE("Generate Terrain and Split Field")
 	t = generate_terrain(rng);
 	engine::split_field(t, 8);
 	std::cout << t << std::endl;
+}
+
+CATCH_TEST_CASE("Generate Directions map")
+{
+	constexpr engine::Directions d = {};
+	std::cout << d.data()[0] << std::endl;
 }
