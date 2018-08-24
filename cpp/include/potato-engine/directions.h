@@ -11,14 +11,14 @@ namespace engine
 class Directions
 {
 public:
-	struct DirectionsItem
+	struct CardinalDirections
 	{
 		cell_type north;
 		cell_type east;
 		cell_type south;
 		cell_type west;
 
-		constexpr bool operator==(const DirectionsItem& other) const noexcept
+		constexpr bool operator==(const CardinalDirections& other) const noexcept
 		{
 			return north == other.north &&
 			       east == other.east &&
@@ -27,10 +27,9 @@ public:
 		}
 	};
 
-	using value_type = DirectionsItem;
-	using storage_type = std::array<value_type, Terrain::area>;
+	std::array<CardinalDirections, Terrain::area> data;
 
-	static constexpr value_type get_directions(cell_type cell) noexcept
+	static constexpr CardinalDirections get_directions(cell_type cell) noexcept
 	{
 		/* static */ constexpr auto invalid = Terrain::area + 1;
 
@@ -117,29 +116,16 @@ public:
 	}
 
 	constexpr Directions() noexcept
-	    : m_data()
+	    : data()
 	{
 		for (cell_type cell = 0; cell < Terrain::area; ++cell)
 		{
-			m_data[cell] = get_directions(cell);
+			data[cell] = get_directions(cell);
 		}
 
 	}
-
-	constexpr storage_type& data() noexcept
-	{
-		return m_data;
-	}
-
-	constexpr const storage_type& data() const noexcept
-	{
-		return m_data;
-	}
-
-private:
-	storage_type m_data;
 };
 
-std::ostream& operator<<(std::ostream& out, const Directions::value_type& d) noexcept;
+std::ostream& operator<<(std::ostream& out, const Directions::CardinalDirections& d) noexcept;
 
 } // namespace engine

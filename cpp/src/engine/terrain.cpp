@@ -7,15 +7,15 @@ namespace engine
 
 std::ostream& operator<<(std::ostream& out, const Terrain& t) noexcept
 {
-	Terrain::size_type cell{0};
+	cell_type cell{0};
 
-	for (Terrain::size_type y = 0; y < Terrain::height; ++y)
+	for (std::size_t y = 0; y < Terrain::height; ++y)
 	{
 		out << " ";
 
 		if (y % 2 == 1) out << "  ";
 
-		for (Terrain::size_type x = 0; x < Terrain::width; ++x)
+		for (std::size_t x = 0; x < Terrain::width; ++x)
 		{
 			const auto entity = t.data()[cell].get();
 
@@ -40,7 +40,7 @@ std::ostream& operator<<(std::ostream& out, const Terrain& t) noexcept
 	return out << std::endl;
 }
 
-std::ostream& operator<<(std::ostream& out, const Directions::value_type& d) noexcept
+std::ostream& operator<<(std::ostream& out, const Directions::CardinalDirections& d) noexcept
 {
 	out << "Directions(";
 	out << "north = " << d.north;

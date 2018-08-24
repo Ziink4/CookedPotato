@@ -16,20 +16,18 @@ namespace engine
 class Terrain
 {
 public:
-	using size_type = std::size_t;
-	static constexpr size_type width = 10;
-	static constexpr size_type height = 20;
-	static constexpr size_type area = width * height;
+	static constexpr std::size_t width = 10;
+	static constexpr std::size_t height = 20;
+	static constexpr std::size_t area = width * height;
 
-	using value_type = std::unique_ptr<Entity>;
-	using storage_type = std::array<value_type, area>;
+	using entity_storage_type = std::array<std::unique_ptr<Entity>, area>;
 
-	constexpr storage_type& data() noexcept
+	constexpr entity_storage_type& data() noexcept
 	{
 		return m_data;
 	}
 
-	constexpr const storage_type& data() const noexcept
+	constexpr const entity_storage_type& data() const noexcept
 	{
 		return m_data;
 	}
@@ -37,7 +35,7 @@ public:
 	friend std::ostream& operator<<(std::ostream& out, const Terrain& t) noexcept;
 
 private:
-	storage_type m_data;
+	entity_storage_type m_data;
 };
 
 constexpr bool is_valid(cell_type cell) noexcept

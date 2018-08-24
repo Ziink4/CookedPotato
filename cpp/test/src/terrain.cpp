@@ -1,7 +1,7 @@
-#include <potato-engine/engine.h> // For engine::print_fancy
 #include <potato-engine/terrain.h> // For engine::Terrain
 #include <potato-engine/directions.h>
 #include <potato-engine/rng.h> // For engine::RandomNumberGenerator
+#include <potato-engine/engine.h> // For engine::print_fancy
 
 #define CATCH_CONFIG_PREFIX_ALL
 #include <catch2/catch.hpp>
@@ -15,8 +15,8 @@ CATCH_TEST_CASE("Point-Cell Transforms")
 	static_assert(pt == pt_2);
 	CATCH_CHECK(pt == pt_2);
 
-	constexpr engine::Terrain::size_type cell{37};
-	constexpr engine::Terrain::size_type cell_2 = engine::get_cell(engine::get_pt(cell));
+	constexpr engine::cell_type cell{37};
+	constexpr engine::cell_type cell_2 = engine::get_cell(engine::get_pt(cell));
 	static_assert(cell == cell_2);
 	CATCH_CHECK(cell == cell_2);
 }
@@ -73,5 +73,5 @@ CATCH_TEST_CASE("Generate Terrain and Split Field")
 CATCH_TEST_CASE("Generate Directions map")
 {
 	constexpr engine::Directions d = {};
-	std::cout << d.data()[0] << std::endl;
+	std::cout << d.data[0] << std::endl;
 }
