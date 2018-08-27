@@ -27,12 +27,11 @@ public:
 		}
 	};
 
-	std::array<CardinalDirections, Terrain::area> data;
+	std::array<CardinalDirections, terrain_area> data;
 
 	static constexpr CardinalDirections get_directions(cell_type cell) noexcept
 	{
-		/* static */ constexpr auto invalid = Terrain::area + 1;
-
+		/* static */ constexpr auto invalid = terrain_area + 1;
 		const auto pt = get_pt(cell);
 
 		/* The map can be split into different cell types depending on the oddity of the height
@@ -75,27 +74,27 @@ public:
 
 		if (pt.y == 0)
 		{
-			// East only
+			// East only (1)
 			if (pt.x == 0) return {invalid, get_cell({pt.x, pt.y + 1}), invalid, invalid};
-			// South and East only
+			// South and East only (2)
 			return {invalid, get_cell({pt.x, pt.y + 1}), get_cell({pt.x - 1, pt.y + 1}), invalid};
 		}
 
-		if (pt.y == Terrain::height - 1)
+		if (pt.y == terrain_height - 1)
 		{
-			if (Terrain::height % 2 == 0)
+			if constexpr (terrain_height % 2 == 0)
 			{
-				// West only
-				if (pt.x == Terrain::width - 1) return {invalid, invalid, invalid, get_cell({pt.x, pt.y - 1})};
-				// West and North only
+				// West only (7)
+				if (pt.x == terrain_width - 1) return {invalid, invalid, invalid, get_cell({pt.x, pt.y - 1})};
+				// West and North only (6)
 				return {get_cell({pt.x + 1, pt.y - 1}), invalid, invalid, get_cell({pt.x, pt.y - 1})};
 			}
 
-			if (Terrain::height % 2 == 1)
+			if constexpr (terrain_height % 2 == 1)
 			{
-				// North only
+				// North only (8)
 				if (pt.x == 0) return {get_cell({pt.x, pt.y - 1}), invalid, invalid, invalid};
-				// West and North only
+				// West and North only (6)
 				return {get_cell({pt.x, pt.y - 1}), invalid, invalid, get_cell({pt.x - 1, pt.y - 1})};
 
 			}
@@ -103,11 +102,17 @@ public:
 
 		if (pt.y % 2 == 0)
 		{
+			// North and East only (3)
+			if (pt.x == 0) return {get_cell({pt.x, pt.y - 1}), get_cell({pt.x, pt.y + 1}), invalid, invalid};
+			// 4-Way (4)
 			return {get_cell({pt.x, pt.y - 1}), get_cell({pt.x, pt.y + 1}), get_cell({pt.x - 1, pt.y + 1}), get_cell({pt.x - 1, pt.y - 1})};
 		}
 
 		if (pt.y % 2 == 1)
 		{
+			// West and South only (5)
+			if (pt.x == terrain_width - 1) return {invalid, invalid, get_cell({pt.x, pt.y + 1}), get_cell({pt.x, pt.y - 1})};
+			// 4-Way (4)
 			return {get_cell({pt.x + 1, pt.y - 1}), get_cell({pt.x + 1, pt.y + 1}), get_cell({pt.x, pt.y + 1}), get_cell({pt.x, pt.y - 1})};
 		}
 
@@ -118,7 +123,7 @@ public:
 	constexpr Directions() noexcept
 	    : data()
 	{
-		for (cell_type cell = 0; cell < Terrain::area; ++cell)
+		for (cell_type cell = 0; cell < terrain_area; ++cell)
 		{
 			data[cell] = get_directions(cell);
 		}

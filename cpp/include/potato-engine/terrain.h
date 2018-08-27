@@ -4,6 +4,8 @@
 #include <potato-engine/engine.h>
 #include <potato-engine/point.h>
 #include <potato-engine/rng.h>
+#include <potato-engine/cell.h>
+
 
 #include <cstddef> // For std::size_t
 #include <array> // For std::array
@@ -13,49 +15,28 @@
 namespace engine
 {
 
-class Terrain
-{
-public:
-	static constexpr std::size_t width = 10;
-	static constexpr std::size_t height = 20;
-	static constexpr std::size_t area = width * height;
+using Terrain = std::array<Cell, terrain_area>;
 
-	using entity_storage_type = std::array<std::unique_ptr<Entity>, area>;
-
-	constexpr entity_storage_type& data() noexcept
-	{
-		return m_data;
-	}
-
-	constexpr const entity_storage_type& data() const noexcept
-	{
-		return m_data;
-	}
-
-	friend std::ostream& operator<<(std::ostream& out, const Terrain& t) noexcept;
-
-private:
-	entity_storage_type m_data;
-};
+std::ostream& operator<<(std::ostream& out, const Terrain& t) noexcept;
 
 constexpr bool is_valid(cell_type cell) noexcept
 {
-	return cell < Terrain::area;
+	return cell < terrain_area;
 }
 
 constexpr bool is_valid(const point_type& pt) noexcept
 {
-	return pt.x < Terrain::width && pt.y < Terrain::height;
+	return pt.x < terrain_width && pt.y < terrain_height;
 }
 
 constexpr point_type::value_type get_x(cell_type cell) noexcept
 {
-	return cell % Terrain::width;
+	return cell % terrain_width;
 }
 
 constexpr point_type::value_type get_y(cell_type cell) noexcept
 {
-	return cell / Terrain::width;
+	return cell / terrain_width;
 }
 
 constexpr point_type get_pt(cell_type cell) noexcept
@@ -65,11 +46,11 @@ constexpr point_type get_pt(cell_type cell) noexcept
 
 constexpr cell_type get_cell(const point_type& pt) noexcept
 {
-	return pt.x + pt.y * Terrain::width;
+	return pt.x + pt.y * terrain_width;
 }
 
 Terrain generate_terrain(RandomNumberGenerator& rng) noexcept;
 
-void split_field(Terrain& t, std::size_t parts) noexcept;
+std::vector<std::vector<cell_type>> split_field(Terrain& t, std::size_t parts) noexcept;
 
 } // namespace engine

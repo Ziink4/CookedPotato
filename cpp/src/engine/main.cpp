@@ -16,13 +16,13 @@ Terrain generate_terrain(RandomNumberGenerator& rng) noexcept
 
 	Terrain t = {};
 
-	for (auto& obstacle : t.data())
+	for (auto& cell : t)
 	{
 		if (distribution(rng.rand()))
 		{
-			if (!obstacle)
+			if (!cell.occupied())
 			{
-				obstacle.reset(new engine::Obstacle());
+				cell.reset(new engine::Obstacle());
 			}
 		}
 	}
@@ -30,17 +30,19 @@ Terrain generate_terrain(RandomNumberGenerator& rng) noexcept
 	return t;
 }
 
-void split_field(Terrain& t, std::size_t parts) noexcept
+std::vector<std::vector<cell_type>> split_field(Terrain& t, std::size_t parts) noexcept
 {
-	static constexpr double width  = Terrain::width;
-	static constexpr double height = Terrain::height;
+	std::vector<std::vector<cell_type>> spawns(parts);
+
+	static constexpr double width  = terrain_width;
+	static constexpr double height = terrain_height;
 	static constexpr auto half_width  = width  / 2.0;
 	static constexpr auto half_height = height / 2.0;
 
 	static const double pi = 4.0 * std::atan(1.0);
 	const double angle_cutoff = 2.0 * pi / parts;
 
-	static constexpr auto radius_y = ((2 * Terrain::width) > Terrain::height) ? half_height : width;
+	static constexpr auto radius_y = ((2 * terrain_width) > height) ? half_height : width;
 	static constexpr auto radius_x = radius_y / 2.0;
 
 	static constexpr auto start_x = static_cast<point_type::value_type>(half_width  - radius_x);
@@ -49,7 +51,7 @@ void split_field(Terrain& t, std::size_t parts) noexcept
 	static constexpr auto end_x = static_cast<point_type::value_type>(half_width  + radius_x);
 	static constexpr auto end_y = static_cast<point_type::value_type>(half_height + radius_y);
 
-	point_type pt;
+	point_type pt{0, 0};
 
 	for (pt.y = start_y; pt.y < end_y; ++pt.y)
 	{
@@ -58,7 +60,7 @@ void split_field(Terrain& t, std::size_t parts) noexcept
 			const auto cell = get_cell(pt);
 
 			// Checks if the current cell is available (we don't want anything to spawn on occupied space)
-			if (!t.data()[cell])
+			if (!t[cell].occupied())
 			{
 				// Translates the coordinates to the center of the terrain
 				const auto fx = pt.x - half_width;
@@ -73,14 +75,13 @@ void split_field(Terrain& t, std::size_t parts) noexcept
 					// Computes with split of the board this cell belongs to
 					const auto part = static_cast<std::size_t>(angle / angle_cutoff) % parts;
 
-					if (part % 2 == 0)
-					{
-						t.data()[cell].reset(new engine::Obstacle());
-					}
+					spawns[part].push_back(cell);
 				}
 			}
 		}
 	}
+
+	return spawns;
 }
 
 } // namespace engine

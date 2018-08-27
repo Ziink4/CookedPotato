@@ -8,10 +8,10 @@ std::ostream& Character::print_symbol(std::ostream& out) const noexcept
 {
 	switch (m_type)
 	{
-		case character_type::player:
-			return out << black_symbol;
-		case character_type::npc:
+		case type::player:
 			return out << white_symbol;
+		case type::npc:
+			return out << square_symbol;
 	}
 }
 

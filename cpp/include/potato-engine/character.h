@@ -17,7 +17,7 @@ class Character : public Entity
 {
 
 public:
-	enum class character_type
+	enum class type
 	{
 		player,
 		npc
@@ -28,7 +28,7 @@ private:
 	static constexpr auto max_spellbook_size = 8;
 
 	// type
-	character_type m_type;
+	type m_type;
 
 	// inventaire
 	std::array<Item, max_inventory_size> m_inventory;
@@ -40,14 +40,14 @@ private:
 	Statistics m_stats;
 
 public:
-	constexpr explicit Character(character_type type) noexcept
+	constexpr explicit Character(type type) noexcept
 	    : m_type(type),
 	      m_inventory(),
 	      m_spellbook(),
 	      m_stats()
 	{ }
 
-	constexpr const auto& type() const noexcept
+	constexpr type type() const noexcept
 	{
 		return m_type;
 	}

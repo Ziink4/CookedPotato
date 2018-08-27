@@ -1,12 +1,12 @@
 #include <potato-engine/obstacle.h>
+#include <potato-engine/symbol.h>
 
 namespace engine
 {
 
 std::ostream& Obstacle::print_symbol(std::ostream& out) const noexcept
 {
-	/* static */ constexpr auto white  = "\xE2\x97\x86"; // white diamond
-	return out << white;
+	return out << split_symbol;
 }
 
 std::ostream& Obstacle::print_summary(std::ostream& out) const noexcept

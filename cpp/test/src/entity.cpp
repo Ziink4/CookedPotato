@@ -10,7 +10,7 @@
 
 CATCH_TEST_CASE("Create entity")
 {
-	engine::Character player(engine::Character::character_type::player);
+	engine::Character player(engine::Character::type::player);
 	std::cout << player << std::endl;
 
 	engine::Obstacle obstacle;
@@ -24,7 +24,7 @@ CATCH_TEST_CASE("Create player and terrain")
 	engine::Terrain t = generate_terrain(rng);
 	std::cout << t << std::endl;
 
-	engine::Character player(engine::Character::character_type::player);
+	engine::Character player(engine::Character::type::player);
 	std::cout << player << std::endl;
 
 }

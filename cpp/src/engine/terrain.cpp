@@ -9,28 +9,16 @@ std::ostream& operator<<(std::ostream& out, const Terrain& t) noexcept
 {
 	cell_type cell{0};
 
-	for (std::size_t y = 0; y < Terrain::height; ++y)
+	for (std::size_t y = 0; y < terrain_height; ++y)
 	{
 		out << " ";
 
 		if (y % 2 == 1) out << "  ";
 
-		for (std::size_t x = 0; x < Terrain::width; ++x)
+		for (std::size_t x = 0; x < terrain_width; ++x)
 		{
-			const auto entity = t.data()[cell].get();
-
-			if (entity)
-			{
-				entity->print_symbol(out);
-			}
-			else
-			{
-				out << black_symbol;
-			}
-
+			out << t[cell];
 			out << "   ";
-
-
 			cell++;
 		}
 

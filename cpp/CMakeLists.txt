@@ -14,6 +14,8 @@ add_library(${TARGET}
 	src/engine/entity.cpp
 	src/engine/character.cpp
 	src/engine/obstacle.cpp
+	src/engine/search.cpp
+
 )
 
 # Add include directories
