@@ -15,6 +15,7 @@ add_library(${TARGET}
 	src/engine/character.cpp
 	src/engine/obstacle.cpp
 	src/engine/search.cpp
+	src/engine/logger.cpp
 
 )
 
@@ -25,6 +26,9 @@ target_include_directories(${TARGET}
 	PRIVATE
 	    ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
+
+# Include external directories
+target_include_directories(${TARGET} SYSTEM PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/external)
 
 # Enable warnings and C++17
 target_compile_options(${TARGET} PUBLIC $<$<CXX_COMPILER_ID:GNU>:-std=c++17 -Wall -Wextra -pedantic>)

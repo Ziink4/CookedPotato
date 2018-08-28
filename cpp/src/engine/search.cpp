@@ -1,4 +1,5 @@
 #include <potato-engine/search.h>
+#include <potato-engine/logger.h>
 
 namespace engine
 {
@@ -7,19 +8,19 @@ void recursive_search(cell_type cell, std::array<bool, terrain_area>& visited, s
 {
 	if (!is_valid(cell))
 	{
-		std::cout << "Skipped invalid " << cell << std::endl;
+		LOG_TRACE(Logger::console, "Skipped invalid {}", cell);
 		return;
 	}
 
 	if (t[cell].occupied())
 	{
-		std::cout << "Skipped occupied " << cell << std::endl;
+		LOG_TRACE(Logger::console, "Skipped occupied {}", cell);
 		return;
 	}
 
 	if (visited[cell])
 	{
-		std::cout << "Skipped visited " << cell << std::endl;
+		LOG_TRACE(Logger::console, "Skipped visited {}", cell);
 		return;
 	}
 
