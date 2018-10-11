@@ -1,8 +1,8 @@
 #pragma once
 
-#include <potato-engine/engine.h>
-#include <potato-engine/directions.h>
-#include <potato-engine/terrain.h>
+#include <engine/engine.h>
+#include <engine/directions.h>
+#include <engine/terrain.h>
 
 #include <array>
 #include <vector>

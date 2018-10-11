@@ -1,5 +1,5 @@
-#include <potato-engine/character.h>
-#include <potato-engine/symbol.h>
+#include <engine/character.h>
+#include <engine/symbol.h>
 
 namespace engine
 {

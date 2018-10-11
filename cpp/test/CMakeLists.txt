@@ -1,5 +1,5 @@
 # Set target name
-set(TEST_TARGET test_${TARGET})
+set(TEST_TARGET test_${ENGINE_TARGET})
 
 message("Configuring ${TEST_TARGET}")
 
@@ -14,4 +14,4 @@ add_executable(${TEST_TARGET}
 target_include_directories(${TEST_TARGET} SYSTEM PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../external)
 
 # Link to main target
-target_link_libraries(${TEST_TARGET} ${TARGET})
+target_link_libraries(${TEST_TARGET} ${ENGINE_TARGET})

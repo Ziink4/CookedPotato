@@ -1,9 +1,10 @@
-#include <potato-engine/engine.h>
-#include <potato-engine/character.h>
-#include <potato-engine/obstacle.h>
-#include <potato-engine/entity.h>
-#include <potato-engine/terrain.h>
-#include <potato-engine/rng.h>
+#include <engine/terrain.h> // For engine::Terrain
+#include <engine/directions.h>
+#include <engine/rng.h> // For engine::RandomNumberGenerator
+#include <engine/engine.h> // For engine::print_fancy
+#include <engine/obstacle.h> // For engine::Obstacle
+#include <engine/character.h> // For engine::Character
+#include <engine/search.h> // For engine::Character
 
 #define CATCH_CONFIG_PREFIX_ALL
 #include <catch2/catch.hpp>
@@ -26,5 +27,4 @@ CATCH_TEST_CASE("Create player and terrain")
 
 	engine::Character player(engine::Character::type::player);
 	std::cout << player << std::endl;
-
 }

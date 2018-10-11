@@ -1,10 +1,10 @@
 #pragma once
 
-#include <potato-engine/entity.h>
-#include <potato-engine/engine.h>
-#include <potato-engine/point.h>
-#include <potato-engine/rng.h>
-#include <potato-engine/cell.h>
+#include <engine/entity.h>
+#include <engine/engine.h>
+#include <engine/point.h>
+#include <engine/rng.h>
+#include <engine/cell.h>
 
 
 #include <cstddef> // For std::size_t

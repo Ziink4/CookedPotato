@@ -1,7 +1,7 @@
 #pragma once
 
-#include <potato-engine/symbol.h>
-#include <potato-engine/entity.h>
+#include <engine/symbol.h>
+#include <engine/entity.h>
 
 #include <memory>
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <potato-engine/entity.h>
+#include <engine/entity.h>
 
 #include <array>
 

@@ -1,10 +1,10 @@
-#include <potato-engine/terrain.h> // For engine::Terrain
-#include <potato-engine/directions.h>
-#include <potato-engine/rng.h> // For engine::RandomNumberGenerator
-#include <potato-engine/engine.h> // For engine::print_fancy
-#include <potato-engine/obstacle.h> // For engine::Obstacle
-#include <potato-engine/character.h> // For engine::Character
-#include <potato-engine/search.h> // For engine::Character
+#include <engine/terrain.h> // For engine::Terrain
+#include <engine/directions.h>
+#include <engine/rng.h> // For engine::RandomNumberGenerator
+#include <engine/engine.h> // For engine::print_fancy
+#include <engine/obstacle.h> // For engine::Obstacle
+#include <engine/character.h> // For engine::Character
+#include <engine/search.h> // For engine::Character
 
 #define CATCH_CONFIG_PREFIX_ALL
 #include <catch2/catch.hpp>

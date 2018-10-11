@@ -1,6 +1,6 @@
 #pragma once
 
-#include <potato-engine/point.h>
+#include <engine/point.h>
 
 namespace engine
 {

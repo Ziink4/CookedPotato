@@ -1,5 +1,5 @@
-#include <potato-engine/obstacle.h>
-#include <potato-engine/symbol.h>
+#include <engine/obstacle.h>
+#include <engine/symbol.h>
 
 namespace engine
 {

@@ -1,6 +1,6 @@
-#include <potato-engine/terrain.h>
-#include <potato-engine/directions.h>
-#include <potato-engine/symbol.h>
+#include <engine/terrain.h>
+#include <engine/directions.h>
+#include <engine/symbol.h>
 
 namespace engine
 {

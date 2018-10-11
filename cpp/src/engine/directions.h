@@ -2,8 +2,8 @@
 
 #include <array>
 
-#include <potato-engine/terrain.h>
-#include <potato-engine/engine.h>
+#include <engine/terrain.h>
+#include <engine/engine.h>
 
 namespace engine
 {

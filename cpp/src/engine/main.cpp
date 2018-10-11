@@ -1,7 +1,7 @@
-#include <potato-engine/engine.h>
-#include <potato-engine/terrain.h>
-#include <potato-engine/rng.h>
-#include <potato-engine/obstacle.h>
+#include <engine/engine.h>
+#include <engine/terrain.h>
+#include <engine/rng.h>
+#include <engine/obstacle.h>
 
 #include <algorithm>
 #include <random>
