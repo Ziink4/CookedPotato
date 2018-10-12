@@ -66,8 +66,8 @@ CATCH_TEST_CASE("Generate Terrain and Split Field")
 	{
 		for (const auto& cell : team)
 		{
-			t[cell].reset(new engine::Character(engine::Character::type::npc));
-		}
+			t[cell].set_entity(std::make_unique<engine::Character>(engine::Character::type::npc));
+        }
 		std::cout << t << std::endl;
 	}
 

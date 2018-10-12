@@ -21,8 +21,8 @@ Terrain generate_terrain(RandomNumberGenerator& rng) noexcept
 		if (distribution(rng.rand()))
 		{
 			if (!cell.occupied())
-			{
-				cell.reset(new engine::Obstacle());
+            {
+				cell.set_entity(std::make_unique<engine::Obstacle>());
 			}
 		}
 	}

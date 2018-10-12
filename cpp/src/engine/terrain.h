@@ -10,7 +10,6 @@
 #include <cstddef> // For std::size_t
 #include <array> // For std::array
 #include <ostream> // For operator<<
-#include <memory>
 
 namespace engine
 {

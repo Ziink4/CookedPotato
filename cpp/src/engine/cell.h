@@ -13,32 +13,15 @@ class Cell
     std::unique_ptr<Entity> entity;
 
 public:
-    bool occupied() const noexcept
-    {
-        return bool(entity);
-    }
+    bool occupied() const noexcept;
 
-    void reset(Entity* e) noexcept
-    {
-        return entity.reset(e);
-    }
+    void swap_entities(Cell& other) noexcept;
 
-    void clear() noexcept
-    {
-        return entity.reset(nullptr);
-    }
+    void remove_entity() noexcept;
 
-    inline friend std::ostream& operator<<(std::ostream& out, const Cell& e) noexcept
-    {
-        if (e.occupied())
-        {
-            return e.entity->print_symbol(out);
-        }
-        else
-        {
-            return out << black_symbol;
-        }
-    }
+    void set_entity(std::unique_ptr<Entity>&& other) noexcept;
+
+    friend std::ostream& operator<<(std::ostream& out, const Cell& e) noexcept;
 };
 
 }

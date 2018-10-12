@@ -15,7 +15,7 @@ add_library(${ENGINE_TARGET}
 	src/engine/character.cpp
 	src/engine/obstacle.cpp
 	src/engine/search.cpp
-)
+        src/engine/cell.cpp)
 
 # Add include directories
 #target_include_directories(${ENGINE_TARGET} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
