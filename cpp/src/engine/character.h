@@ -3,15 +3,25 @@
 #include <engine/entity.h>
 
 #include <array>
+#include <queue>
 
 namespace engine
 {
 
-class Item {};
+struct Item
+{
+	int strength = 10;
+};
 
 class Spell {};
 
-class Statistics {};
+struct Statistics
+{
+	int health = 100;
+	int shield = 0;
+	int strength = 0;
+	int defense = 0;
+};
 
 class Character : public Entity
 {
@@ -26,6 +36,8 @@ public:
 private:
 	static constexpr auto max_inventory_size = 8;
 	static constexpr auto max_spellbook_size = 8;
+
+	static constexpr auto shield_damage_resistance = 0.5f;
 
 	// type
 	type m_type;
@@ -51,6 +63,10 @@ public:
 	{
 		return m_type;
 	}
+
+	void use_weapon(std::size_t item_id, Character& target);
+
+	void receive_damage(int raw_damage);
 
 	std::ostream& print_symbol(std::ostream& out) const noexcept override;
 

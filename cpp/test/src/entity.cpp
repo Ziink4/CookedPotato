@@ -25,6 +25,15 @@ CATCH_TEST_CASE("Create player and terrain")
 	engine::Terrain t = generate_terrain(rng);
 	std::cout << t << std::endl;
 
-	engine::Character player(engine::Character::type::player);
-	std::cout << player << std::endl;
+	engine::Character player1(engine::Character::type::player);
+	engine::Character player2(engine::Character::type::player);
+
+	std::cout << player1 << std::endl;
+	std::cout << player2 << std::endl;
+
+	player2.use_weapon(0, player1);
+
+	std::cout << player1 << std::endl;
+	std::cout << player2 << std::endl;
+
 }
