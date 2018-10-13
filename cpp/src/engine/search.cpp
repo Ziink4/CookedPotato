@@ -1,60 +1,67 @@
 #include <engine/search.h>
 
+#include <stack>
+
 namespace engine
 {
 
-void recursive_search(cell_type cell, std::array<bool, terrain_area>& visited, std::vector<cell_type>& component, const Directions& d, const Terrain& t)
-{
-	if (!is_valid(cell))
-	{
-		// Skipping invalid cell
-		return;
-	}
-
-	if (t[cell].occupied())
-	{
-		// Skipping occupied cell
-		return;
-	}
-
-	if (visited[cell])
-	{
-		// Skipping visited cell
-		return;
-	}
-
-	// Mark the current node as visited and print it
-	std::cout << "Visited " << cell << std::endl;
-	visited[cell] = true;
-	component.push_back(cell);
-
-	std::cout << "Exploring " << d.data[cell].north << " " << d.data[cell].east << " " << d.data[cell].south << " " << d.data[cell].west << " from " << cell << std::endl;
-
-	recursive_search(d.data[cell].north, visited, component, d, t);
-	recursive_search(d.data[cell].east, visited, component, d, t);
-	recursive_search(d.data[cell].south, visited, component, d, t);
-	recursive_search(d.data[cell].west, visited, component, d, t);
-
-}
-
 std::vector<std::vector<cell_type>> connected_components(const Directions& d, const Terrain& t)
 {
-	// Mark all the vertices as not visited
-	std::array<bool, terrain_area> visited = {};
-	std::vector<std::vector<cell_type>> components;
+    // Mark all the cells as not visited
+    std::array<bool, terrain_area> visited = {};
 
-	for (cell_type cell = 0; cell < terrain_area; ++cell)
-	{
-		std::vector<cell_type> current_component = {};
-		recursive_search(cell, visited, current_component, d, t);
+    // Create output data structure
+    std::vector<std::vector<cell_type>> components;
 
-		if (!current_component.empty())
-		{
-			components.push_back(std::move(current_component));
-		}
-	}
+    for (cell_type root_cell = 0; root_cell < terrain_area; ++root_cell)
+    {
+        if (t[root_cell].occupied() || visited[root_cell])
+        {
+            std::cout << "Skipping occupied/visited root cell " << root_cell << std::endl;
+        }
+        else
+        {
+            // Create search stack
+            std::stack<cell_type> cells_to_visit;
+            cells_to_visit.push(root_cell);
 
-	return components;
+            // Allocate current component
+            std::vector<cell_type> current_component = {};
+
+            while (!cells_to_visit.empty())
+            {
+                auto cell = cells_to_visit.top();
+                cells_to_visit.pop();
+
+                if (!is_valid(cell) || t[cell].occupied() || visited[cell])
+                {
+                    std::cout << "Skipping invalid/occupied/visited cell " << cell << std::endl;
+                }
+                else
+                {
+                    // Mark the current cell as visited and store it
+                    std::cout << "Visited " << cell << std::endl;
+                    visited[cell] = true;
+                    current_component.push_back(cell);
+
+                    std::cout << "Exploring " << d.data[cell].north << " " << d.data[cell].east << " " << d.data[cell].south << " " << d.data[cell].west << " from " << cell << std::endl;
+
+                    cells_to_visit.push(d.data[cell].north);
+                    cells_to_visit.push(d.data[cell].east);
+                    cells_to_visit.push(d.data[cell].south);
+                    cells_to_visit.push(d.data[cell].west);
+                }
+            }
+
+            if (!current_component.empty())
+            {
+                components.push_back(std::move(current_component));
+            }
+        }
+    }
+
+    return components;
 }
+
 
 }
