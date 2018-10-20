@@ -12,7 +12,9 @@ Cargo.lock
 build*
 cpp/CMakeLists\.txt\.user*
 
-
+# CLion
 cpp/cmake-build-debug/
-
 \.idea/
+
+# Visual Studio
+/cpp/.vs

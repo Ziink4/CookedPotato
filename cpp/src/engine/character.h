@@ -52,7 +52,7 @@ private:
 	Statistics m_stats;
 
 public:
-	constexpr explicit Character(type type) noexcept
+	explicit Character(type type) noexcept
 	    : m_type(type),
 	      m_inventory(),
 	      m_spellbook(),
