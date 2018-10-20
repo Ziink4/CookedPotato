@@ -12,6 +12,8 @@ std::ostream& Character::print_symbol(std::ostream& out) const noexcept
 			return out << white_symbol;
 		case type::npc:
 			return out << square_symbol;
+		default:
+			return out;
 	}
 }
 
