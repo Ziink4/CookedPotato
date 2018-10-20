@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <optional>
 
 #include <engine/terrain.h>
 #include <engine/engine.h>
@@ -13,27 +14,16 @@ class Directions
 public:
 	struct CardinalDirections
 	{
-		cell_type north;
-		cell_type east;
-		cell_type south;
-		cell_type west;
-
-		constexpr bool operator==(const CardinalDirections& other) const noexcept
-		{
-			return north == other.north &&
-			       east == other.east &&
-			       south == other.south &&
-			       west == other.west;
-		}
+		std::optional<point_type> north;
+		std::optional<point_type> east;
+		std::optional<point_type> south;
+		std::optional<point_type> west;
 	};
 
 	std::array<CardinalDirections, terrain_area> data;
 
-	static constexpr CardinalDirections get_directions(cell_type cell) noexcept
+	static constexpr CardinalDirections get_directions(point_type pt) noexcept
 	{
-		/* static */ constexpr auto invalid = terrain_area + 1;
-		const auto pt = get_pt(cell);
-
 		/* The map can be split into different cell types depending on the oddity of the height
 		 * With even height
 		 * 1 2 2 2
@@ -75,9 +65,9 @@ public:
 		if (pt.y == 0)
 		{
 			// East only (1)
-			if (pt.x == 0) return {invalid, get_cell({pt.x, pt.y + 1}), invalid, invalid};
+			if (pt.x == 0) return {std::nullopt, std::optional<point_type>{pt.x, pt.y + 1}, std::nullopt, std::nullopt};
 			// South and East only (2)
-			return {invalid, get_cell({pt.x, pt.y + 1}), get_cell({pt.x - 1, pt.y + 1}), invalid};
+			return {std::nullopt, std::optional<point_type>{pt.x, pt.y + 1}, std::optional<point_type>{pt.x - 1, pt.y + 1}, std::nullopt};
 		}
 
 		if (pt.y == terrain_height - 1)
@@ -85,17 +75,17 @@ public:
 			if constexpr (terrain_height % 2 == 0)
 			{
 				// West only (7)
-				if (pt.x == terrain_width - 1) return {invalid, invalid, invalid, get_cell({pt.x, pt.y - 1})};
+				if (pt.x == terrain_width - 1) return {std::nullopt, std::nullopt, std::nullopt, std::optional<point_type>{pt.x, pt.y - 1}};
 				// West and North only (6)
-				return {get_cell({pt.x + 1, pt.y - 1}), invalid, invalid, get_cell({pt.x, pt.y - 1})};
+				return {std::optional<point_type>{pt.x + 1, pt.y - 1}, std::nullopt, std::nullopt, std::optional<point_type>{pt.x, pt.y - 1}};
 			}
 
 			if constexpr (terrain_height % 2 == 1)
 			{
 				// North only (8)
-				if (pt.x == 0) return {get_cell({pt.x, pt.y - 1}), invalid, invalid, invalid};
+				if (pt.x == 0) return {std::optional<point_type>{pt.x, pt.y - 1}, std::nullopt, std::nullopt, std::nullopt};
 				// West and North only (6)
-				return {get_cell({pt.x, pt.y - 1}), invalid, invalid, get_cell({pt.x - 1, pt.y - 1})};
+				return {std::optional<point_type>{pt.x, pt.y - 1}, std::nullopt, std::nullopt, std::optional<point_type>{pt.x - 1, pt.y - 1}};
 
 			}
 		}
@@ -103,21 +93,21 @@ public:
 		if (pt.y % 2 == 0)
 		{
 			// North and East only (3)
-			if (pt.x == 0) return {get_cell({pt.x, pt.y - 1}), get_cell({pt.x, pt.y + 1}), invalid, invalid};
+			if (pt.x == 0) return {std::optional<point_type>{pt.x, pt.y - 1}, std::optional<point_type>{pt.x, pt.y + 1}, std::nullopt, std::nullopt};
 			// 4-Way (4)
-			return {get_cell({pt.x, pt.y - 1}), get_cell({pt.x, pt.y + 1}), get_cell({pt.x - 1, pt.y + 1}), get_cell({pt.x - 1, pt.y - 1})};
+			return {std::optional<point_type>{pt.x, pt.y - 1}, std::optional<point_type>{pt.x, pt.y + 1}, std::optional<point_type>{pt.x - 1, pt.y + 1}, std::optional<point_type>{pt.x - 1, pt.y - 1}};
 		}
 
 		if (pt.y % 2 == 1)
 		{
 			// West and South only (5)
-			if (pt.x == terrain_width - 1) return {invalid, invalid, get_cell({pt.x, pt.y + 1}), get_cell({pt.x, pt.y - 1})};
+			if (pt.x == terrain_width - 1) return {std::nullopt, std::nullopt, std::optional<point_type>{pt.x, pt.y + 1}, std::optional<point_type>{pt.x, pt.y - 1}};
 			// 4-Way (4)
-			return {get_cell({pt.x + 1, pt.y - 1}), get_cell({pt.x + 1, pt.y + 1}), get_cell({pt.x, pt.y + 1}), get_cell({pt.x, pt.y - 1})};
+			return {std::optional<point_type>{pt.x + 1, pt.y - 1}, std::optional<point_type>{pt.x + 1, pt.y + 1}, std::optional<point_type>{pt.x, pt.y + 1}, std::optional<point_type>{pt.x, pt.y - 1}};
 		}
 
 		// We should not ever get here
-		return {invalid, invalid, invalid, invalid};
+		return {std::nullopt, std::nullopt, std::nullopt, std::nullopt};
 	}
 
 	constexpr Directions() noexcept

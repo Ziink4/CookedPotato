@@ -35,5 +35,4 @@ CATCH_TEST_CASE("Create player and terrain")
 
 	std::cout << player1 << std::endl;
 	std::cout << player2 << std::endl;
-
 }
