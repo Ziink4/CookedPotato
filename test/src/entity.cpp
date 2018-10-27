@@ -6,10 +6,9 @@
 #include <engine/character.h> // For engine::Character
 #include <engine/search.h> // For engine::Character
 
-#define CATCH_CONFIG_PREFIX_ALL
-#include <catch2/catch.hpp>
+#include <gtest/gtest.h>
 
-CATCH_TEST_CASE("Create entity")
+TEST(Entity, CreateEntity)
 {
 	engine::Character player(engine::Character::type::player);
 	std::cout << player << std::endl;
@@ -18,7 +17,7 @@ CATCH_TEST_CASE("Create entity")
 	std::cout << obstacle << std::endl;
 }
 
-CATCH_TEST_CASE("Create player and terrain")
+TEST(Entity, CreatePlayerAndTerrain)
 {
 	engine::RandomNumberGenerator rng(engine::RandomNumberGenerator::fixed_seed);
 

@@ -6,31 +6,30 @@
 #include <engine/character.h> // For engine::Character
 #include <engine/search.h> // For engine::Character
 
-#define CATCH_CONFIG_PREFIX_ALL
-#include <catch2/catch.hpp>
+#include <gtest/gtest.h>
 
 #include <iostream>
 
-CATCH_TEST_CASE("Print Point")
+TEST(Terrain, PrintPoint)
 {
 	constexpr engine::point_type pt{5, 3};
 	std::cout << pt << std::endl;
 }
 
-CATCH_TEST_CASE("Print Terrain")
+TEST(Terrain, PrintTerrain)
 {
 	const engine::Terrain t{};
 	std::cout << t << std::endl;
 }
 
-CATCH_TEST_CASE("Generate Terrain")
+TEST(Terrain, GenerateTerrain)
 {
 	engine::RandomNumberGenerator rng(engine::RandomNumberGenerator::fixed_seed);
 	const engine::Terrain t = generate_terrain(rng);
 	std::cout << t << std::endl;
 }
 
-CATCH_TEST_CASE("Generate Terrain and Split Field")
+TEST(Terrain, GenerateTerrainAndSplitField)
 {
 	engine::RandomNumberGenerator rng(engine::RandomNumberGenerator::fixed_seed);
 
@@ -59,11 +58,11 @@ CATCH_TEST_CASE("Generate Terrain and Split Field")
 	std::cout << t << std::endl;
 }
 
-CATCH_TEST_CASE("Connected Components")
+TEST(Terrain, ConnectedComponents)
 {
 	const auto cc = engine::connected_components({});
 
-	CATCH_CHECK(cc.size() == 1);
+	EXPECT_EQ(cc.size(), 1);
 
 	for (const auto& component : cc)
 	{
@@ -75,11 +74,11 @@ CATCH_TEST_CASE("Connected Components")
 		std::cout << std::endl;
 	}
 
-	CATCH_CHECK(cc[0].size() == 200);
+	EXPECT_EQ(cc[0].size(), 200);
 
 }
 
-CATCH_TEST_CASE("Generate Terrain and CC")
+TEST(Terrain, GenerateTerrainAndCC)
 {
 	std::cout << "START" << std::endl;
 
@@ -91,7 +90,7 @@ CATCH_TEST_CASE("Generate Terrain and CC")
 
 	std::cout << cc.size() << " components" << std::endl;
 
-	CATCH_CHECK(cc.size() == 2);
+	EXPECT_EQ(cc.size(), 2);
 
 	for (const auto& component : cc)
 	{
@@ -103,6 +102,6 @@ CATCH_TEST_CASE("Generate Terrain and CC")
 		std::cout << std::endl;
 	}
 
-	CATCH_CHECK(cc[0].size() == 8);
-	CATCH_CHECK(cc[1].size() == 150);
+	EXPECT_EQ(cc[0].size(), 8);
+	EXPECT_EQ(cc[1].size(), 150);
 }

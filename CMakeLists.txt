@@ -29,7 +29,7 @@ target_include_directories(${ENGINE_TARGET} SYSTEM PRIVATE ${CMAKE_CURRENT_SOURC
 # Enable warnings and C++17
 target_compile_options(${ENGINE_TARGET} PUBLIC $<$<CXX_COMPILER_ID:GNU>:-std=c++17 -Wall -Wextra -pedantic>)
 target_compile_options(${ENGINE_TARGET} PUBLIC $<$<CXX_COMPILER_ID:Clang>:-std=c++17 -Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic>)
-target_compile_options(${ENGINE_TARGET} PUBLIC $<$<CXX_COMPILER_ID:MSVC>:/std:c++17 /W4>)
+target_compile_options(${ENGINE_TARGET} PUBLIC $<$<CXX_COMPILER_ID:MSVC>:/std:c++17;/W4>)
 
 # Add tests
 add_subdirectory(test)
