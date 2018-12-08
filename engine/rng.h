@@ -21,10 +21,7 @@ public:
 	/// the fixed seed is set to the generator default seed
 	static constexpr seed_type fixed_seed = generator::default_seed;
 
-	/// default constructor uses default seed
-	explicit RandomNumberGenerator() noexcept : RandomNumberGenerator(default_seed) {}
-
-	explicit RandomNumberGenerator(seed_type seed) noexcept : m_seed(seed)
+	explicit RandomNumberGenerator(seed_type seed = default_seed) noexcept : m_seed(seed)
 	{
 		/// a seed of 0 will randomly create a seed
 		if (m_seed == default_seed)
@@ -38,8 +35,6 @@ public:
 	}
 
 	generator& rand() noexcept { return m_rng; }
-
-	seed_type seed() const noexcept { return m_seed; }
 };
 
 } // namespace engine

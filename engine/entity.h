@@ -1,6 +1,6 @@
 #pragma once
 
-#include <iostream>
+#include <ostream>
 
 namespace engine
 {
@@ -8,9 +8,9 @@ namespace engine
 class Entity
 {
 public:
-	virtual std::ostream& print_summary(std::ostream& out) const noexcept = 0;
+	virtual void print_summary(std::ostream& out) const noexcept = 0;
 
-	virtual std::ostream& print_symbol(std::ostream& out) const noexcept = 0;
+	virtual void print_symbol(std::ostream& out) const noexcept = 0;
 
 	virtual ~Entity() = default;
 };

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <iostream>
+#include <ostream>
 
 namespace engine
 {
@@ -12,16 +12,11 @@ struct Point
 	T y;
 };
 
+
 template <class T>
 constexpr bool operator ==(const Point<T>& a, const Point<T>& b) noexcept
 {
 	return (a.x == b.x) && (a.y == b.y);
-}
-
-template <class T>
-constexpr bool operator !=(const Point<T>& a, const Point<T>& b) noexcept
-{
-	return (a.x != b.x) || (a.y != b.y);
 }
 
 template <class T>

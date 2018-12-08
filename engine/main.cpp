@@ -1,7 +1,6 @@
-#include <engine/engine.h>
-#include <engine/terrain.h>
-#include <engine/rng.h>
-#include <engine/obstacle.h>
+#include "terrain.h"
+#include "rng.h"
+#include "obstacle.h"
 
 #include <algorithm>
 #include <random>
@@ -14,25 +13,19 @@ Terrain generate_terrain(RandomNumberGenerator& rng) noexcept
 	static constexpr auto density = 0.25;
 	static std::bernoulli_distribution distribution(density);
 
-	Terrain t = {};
+	Terrain t{};
 
 	for (auto& cell : t)
-	{
 		if (distribution(rng.rand()))
-		{
 			if (!cell)
-            {
 				cell = std::move(std::make_unique<engine::Obstacle>());
-			}
-		}
-	}
 
 	return t;
 }
 
-std::vector<std::vector<point_type>> split_field(Terrain& t, std::size_t parts) noexcept
+std::vector<std::vector<Point<std::size_t>>> split_field(Terrain& t, std::size_t parts) noexcept
 {
-	std::vector<std::vector<point_type>> spawns(parts);
+	std::vector<std::vector<Point<std::size_t>>> spawns(parts);
 
 	static constexpr double width  = terrain_width;
 	static constexpr double height = terrain_height;
@@ -51,7 +44,7 @@ std::vector<std::vector<point_type>> split_field(Terrain& t, std::size_t parts) 
 	static constexpr auto end_x = static_cast<std::size_t>(half_width  + radius_x);
 	static constexpr auto end_y = static_cast<std::size_t>(half_height + radius_y);
 
-	point_type pt{0, 0};
+	Point<std::size_t> pt{0, 0};
 
 	for (pt.y = start_y; pt.y < end_y; ++pt.y)
 	{

@@ -1,21 +1,21 @@
-#include <engine/search.h>
+#include "search.h"
+#include "directions.h"
 
 #include <stack>
-#include <unordered_set>
-#include <set>
+#include <iostream>
 
 namespace engine
 {
 
-std::vector<std::vector<point_type>> connected_components(const Terrain& t)
+std::vector<std::vector<Point<std::size_t>>> connected_components(const Terrain& t)
 {
     // Mark all the cells as not visited
     std::array<bool, terrain_area> visited = {};
 
     // Create output data structure
-    std::vector<std::vector<point_type>> components;
+    std::vector<std::vector<Point<std::size_t>>> components;
 
-	point_type pt;
+	Point<std::size_t> pt;
 
 	for (pt.y = 0; pt.y < terrain_height; ++pt.y)
 	{
@@ -28,11 +28,11 @@ std::vector<std::vector<point_type>> connected_components(const Terrain& t)
 			else
 			{
 				// Create search stack
-				std::stack<point_type> cells_to_visit;
+				std::stack<Point<std::size_t>> cells_to_visit;
 				cells_to_visit.push(pt);
 
 				// Allocate current component
-				std::vector<point_type> current_component = {};
+				std::vector<Point<std::size_t>> current_component = {};
 
 				while (!cells_to_visit.empty())
 				{
@@ -66,9 +66,7 @@ std::vector<std::vector<point_type>> connected_components(const Terrain& t)
 				}
 
 				if (!current_component.empty())
-				{
 					components.push_back(std::move(current_component));
-				}
 			}
 		}
     }

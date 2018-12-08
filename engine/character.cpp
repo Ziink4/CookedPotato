@@ -1,23 +1,25 @@
-#include <engine/character.h>
-#include <engine/symbol.h>
+#include "character.h"
+#include "symbol.h"
+
+#include <iostream>
 
 namespace engine
 {
 
-std::ostream& Character::print_symbol(std::ostream& out) const noexcept
+void Character::print_symbol(std::ostream& out) const noexcept
 {
 	switch (m_type)
 	{
 		case type::player:
-			return out << white_symbol;
+			out << white_symbol;
+			break;
 		case type::npc:
-			return out << square_symbol;
-		default:
-			return out;
+			out << square_symbol;
+			break;
 	}
 }
 
-std::ostream& Character::print_summary(std::ostream& out) const noexcept
+void Character::print_summary(std::ostream& out) const noexcept
 {
 	out << " [" << this << "] ";
 	out << "Character(";
@@ -28,7 +30,6 @@ std::ostream& Character::print_summary(std::ostream& out) const noexcept
 	out << ", ";
 	out << "shield = " << m_stats.shield;
 	out << ")";
-	return  out;
 }
 
 void Character::receive_damage(int raw_damage)

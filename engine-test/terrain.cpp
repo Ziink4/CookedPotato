@@ -1,7 +1,6 @@
 #include <engine/terrain.h> // For engine::Terrain
 #include <engine/directions.h>
 #include <engine/rng.h> // For engine::RandomNumberGenerator
-#include <engine/engine.h> // For engine::print_fancy
 #include <engine/obstacle.h> // For engine::Obstacle
 #include <engine/character.h> // For engine::Character
 #include <engine/search.h> // For engine::Character
@@ -12,7 +11,7 @@
 
 TEST(Terrain, PrintPoint)
 {
-	constexpr engine::point_type pt{5, 3};
+	constexpr engine::Point<std::size_t> pt{5, 3};
 	std::cout << pt << std::endl;
 }
 
@@ -68,9 +67,7 @@ TEST(Terrain, ConnectedComponents)
 	{
 		std::cout << "Component : ";
 		for (const auto& cell : component)
-		{
 			std::cout << cell << " ";
-		}
 		std::cout << std::endl;
 	}
 
@@ -80,25 +77,18 @@ TEST(Terrain, ConnectedComponents)
 
 TEST(Terrain, GenerateTerrainAndCC)
 {
-	std::cout << "START" << std::endl;
-
 	engine::RandomNumberGenerator rng(engine::RandomNumberGenerator::fixed_seed);
 	const engine::Terrain t = generate_terrain(rng);
 	std::cout << t << std::endl;
 
 	const auto cc = engine::connected_components(t);
 
-	std::cout << cc.size() << " components" << std::endl;
-
 	EXPECT_EQ(cc.size(), 2);
 
 	for (const auto& component : cc)
 	{
-		std::cout << "Component of size " << component.size() << " : ";
 		for (const auto& cell : component)
-		{
 			std::cout << cell << " ";
-		}
 		std::cout << std::endl;
 	}
 

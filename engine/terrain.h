@@ -1,12 +1,10 @@
 #pragma once
 
-#include <engine/entity.h>
-#include <engine/engine.h>
-#include <engine/point.h>
+#include "entity.h"
+#include "point.h"
 
-#include <engine/rng.h>
+#include "rng.h"
 
-#include <cstddef> // For std::size_t
 #include <array> // For std::array
 #include <ostream> // For operator<<
 #include <optional>
@@ -17,10 +15,10 @@ namespace engine
 
 struct CardinalDirections
 {
-	std::optional<point_type> north;
-	std::optional<point_type> east;
-	std::optional<point_type> south;
-	std::optional<point_type> west;
+	std::optional<Point<std::size_t>> north;
+	std::optional<Point<std::size_t>> east;
+	std::optional<Point<std::size_t>> south;
+	std::optional<Point<std::size_t>> west;
 
 	bool operator==(const CardinalDirections& other) const noexcept
 	{
@@ -35,17 +33,14 @@ struct CardinalDirections
 template <std::size_t width, std::size_t height>
 class GenericTerrain
 {
-private:
-
 public:
-
     using element_type = Entity;
 
     using point_type = Point<std::size_t>;
 
     std::array<std::unique_ptr<element_type>, width * height> elements;
 
-	const Entity* at(point_type pt) const noexcept
+	const auto at(point_type pt) const noexcept
 	{
 		return elements.at(pt.x + pt.y * width).get();
 	}
@@ -61,11 +56,10 @@ public:
     }
 
 	auto begin() { return elements.begin(); }
-	auto begin() const { return elements.cbegin(); }
+	auto cbegin() const { return elements.cbegin(); }
 
 	auto end() { return elements.end(); }
-	auto end() const { return elements.cend(); }
-
+	auto cend() const { return elements.cend(); }
 
 	CardinalDirections neighbors(point_type pt) const noexcept
 	{
@@ -106,8 +100,6 @@ public:
 
 		return d;
 	}
-
-
 };
 
 constexpr std::size_t terrain_width = 10;
@@ -120,6 +112,6 @@ std::ostream& operator<<(std::ostream& out, const Terrain& t) noexcept;
 
 Terrain generate_terrain(RandomNumberGenerator& rng) noexcept;
 
-std::vector<std::vector<point_type>> split_field(Terrain& t, std::size_t parts) noexcept;
+std::vector<std::vector<Point<std::size_t>>> split_field(Terrain& t, std::size_t parts) noexcept;
 
 } // namespace engine

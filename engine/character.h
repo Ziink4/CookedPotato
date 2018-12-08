@@ -1,6 +1,6 @@
 #pragma once
 
-#include <engine/entity.h>
+#include "entity.h"
 
 #include <array>
 #include <queue>
@@ -68,9 +68,9 @@ public:
 
 	void receive_damage(int raw_damage);
 
-	std::ostream& print_symbol(std::ostream& out) const noexcept override;
+	void print_symbol(std::ostream& out) const noexcept override;
 
-	std::ostream& print_summary(std::ostream& out) const noexcept override;
+	void print_summary(std::ostream& out) const noexcept override;
 };
 
 } // namespace engine
