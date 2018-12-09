@@ -7,11 +7,20 @@
 
 #include <gtest/gtest.h>
 
-TEST(Entity, CreateEntity)
+TEST(Entity, CreateCharacterPlayer)
 {
     engine::Character player(engine::Character::type::player);
     std::cout << player << "\n";
+}
 
+TEST(Entity, CreateCharacterNpc)
+{
+    engine::Character npc(engine::Character::type::npc);
+    std::cout << npc << "\n";
+}
+
+TEST(Entity, CreateObstacle)
+{
     engine::Obstacle obstacle;
     std::cout << obstacle << "\n";
 }
