@@ -4,12 +4,12 @@ message("Configuring ${POTATO_TARGET}")
 
 # Add sources
 add_library(${POTATO_TARGET}
-	main.cpp
-	terrain.cpp
-	entity.cpp
-	character.cpp
-	obstacle.cpp
-	search.cpp
+    main.cpp
+    terrain.cpp
+    entity.cpp
+    character.cpp
+    obstacle.cpp
+    search.cpp
 )
 
 potato_setup_compile_options(TARGET ${POTATO_TARGET})

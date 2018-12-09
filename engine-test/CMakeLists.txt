@@ -17,9 +17,9 @@ target_include_directories(${POTATO_TARGET} SYSTEM PRIVATE ${CMAKE_CURRENT_SOURC
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 add_subdirectory(
-	${CMAKE_CURRENT_SOURCE_DIR}/../external/googletest
-	${CMAKE_CURRENT_BINARY_DIR}/../external/googletest
-	EXCLUDE_FROM_ALL
+    ${CMAKE_CURRENT_SOURCE_DIR}/../external/googletest
+    ${CMAKE_CURRENT_BINARY_DIR}/../external/googletest
+    EXCLUDE_FROM_ALL
 )
 
 # Include Google Test
@@ -28,4 +28,3 @@ target_include_directories(${POTATO_TARGET} SYSTEM PRIVATE ${CMAKE_CURRENT_SOURC
 # Link to main target
 target_link_libraries(${POTATO_TARGET} starch)
 target_link_libraries(${POTATO_TARGET} gtest_main)
-
