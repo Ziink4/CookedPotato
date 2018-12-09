@@ -8,7 +8,7 @@ namespace engine
 
 void Obstacle::print_symbol(std::ostream& out) const noexcept
 {
-    out << split_symbol;
+    out << Symbol::split;
 }
 
 void Obstacle::print_summary(std::ostream& out) const noexcept

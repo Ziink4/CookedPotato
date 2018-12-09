@@ -11,10 +11,10 @@ void Character::print_symbol(std::ostream& out) const noexcept
     switch (m_type)
     {
         case type::player:
-            out << white_symbol;
+            out << Symbol::white;
             break;
         case type::npc:
-            out << square_symbol;
+            out << Symbol::square;
             break;
     }
 }
