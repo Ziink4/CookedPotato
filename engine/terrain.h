@@ -5,8 +5,8 @@
 
 #include "rng.h"
 
-#include <array> // For std::array
-#include <ostream> // For operator<<
+#include <array>
+#include <ostream>
 #include <optional>
 
 
@@ -15,18 +15,18 @@ namespace engine
 
 struct CardinalDirections
 {
-	std::optional<Point<std::size_t>> north;
-	std::optional<Point<std::size_t>> east;
-	std::optional<Point<std::size_t>> south;
-	std::optional<Point<std::size_t>> west;
+    std::optional<Point<std::size_t>> north;
+    std::optional<Point<std::size_t>> east;
+    std::optional<Point<std::size_t>> south;
+    std::optional<Point<std::size_t>> west;
 
-	bool operator==(const CardinalDirections& other) const noexcept
-	{
-		return (north == other.north)
-			&& (east == other.east)
-			&& (south == other.south)
-			&& (west == other.west);
-	}
+    bool operator==(const CardinalDirections& other) const noexcept
+    {
+        return (north == other.north)
+            && (east == other.east)
+            && (south == other.south)
+            && (west == other.west);
+    }
 };
 
 
@@ -40,10 +40,10 @@ public:
 
     std::array<std::unique_ptr<element_type>, width * height> elements;
 
-	const auto at(point_type pt) const noexcept
-	{
-		return elements.at(pt.x + pt.y * width).get();
-	}
+    const auto at(point_type pt) const noexcept
+    {
+        return elements.at(pt.x + pt.y * width).get();
+    }
 
     void place_entity(std::unique_ptr<element_type>&& other, point_type pt)
     {
@@ -55,51 +55,51 @@ public:
         elements.at(pt.x + pt.y * width).reset();
     }
 
-	auto begin() { return elements.begin(); }
-	auto cbegin() const { return elements.cbegin(); }
+    auto begin() { return elements.begin(); }
+    auto cbegin() const { return elements.cbegin(); }
 
-	auto end() { return elements.end(); }
-	auto cend() const { return elements.cend(); }
+    auto end() { return elements.end(); }
+    auto cend() const { return elements.cend(); }
 
-	CardinalDirections neighbors(point_type pt) const noexcept
-	{
-		CardinalDirections d;
+    CardinalDirections neighbors(point_type pt) const noexcept
+    {
+        CardinalDirections d;
 
-		if (pt.y % 2 == 0)
-		{
-			d = {{{pt.x, pt.y - 1}}, {{pt.x, pt.y + 1}}, {{pt.x - 1, pt.y + 1}}, {{pt.x - 1, pt.y - 1}}};
+        if (pt.y % 2 == 0)
+        {
+            d = {{{pt.x, pt.y - 1}}, {{pt.x, pt.y + 1}}, {{pt.x - 1, pt.y + 1}}, {{pt.x - 1, pt.y - 1}}};
 
-			if (pt.x == 0)
-			{
-				d.south.reset();
-				d.west.reset();
-			}
-		}
-		else
-		{
-			d = {{{pt.x + 1, pt.y - 1}}, {{pt.x + 1, pt.y + 1}}, {{pt.x, pt.y + 1}}, {{pt.x, pt.y - 1}}};
+            if (pt.x == 0)
+            {
+                d.south.reset();
+                d.west.reset();
+            }
+        }
+        else
+        {
+            d = {{{pt.x + 1, pt.y - 1}}, {{pt.x + 1, pt.y + 1}}, {{pt.x, pt.y + 1}}, {{pt.x, pt.y - 1}}};
 
-			if (pt.x == width - 1)
-			{
-				d.north.reset();
-				d.east.reset();
-			}
-		}
+            if (pt.x == width - 1)
+            {
+                d.north.reset();
+                d.east.reset();
+            }
+        }
 
-		if (pt.y == 0)
-		{
-			d.north.reset();
-			d.west.reset();
-		}
+        if (pt.y == 0)
+        {
+            d.north.reset();
+            d.west.reset();
+        }
 
-		if (pt.y == height - 1)
-		{
-			d.east.reset();
-			d.south.reset();
-		}
+        if (pt.y == height - 1)
+        {
+            d.east.reset();
+            d.south.reset();
+        }
 
-		return d;
-	}
+        return d;
+    }
 };
 
 constexpr std::size_t terrain_width = 10;
