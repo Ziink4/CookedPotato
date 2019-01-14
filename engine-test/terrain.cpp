@@ -5,9 +5,10 @@
 #include <engine/character.h> 
 #include <engine/search.h>
 
-#include <gtest/gtest.h>
-
 #include <iostream>
+
+#include <gtest/gtest.h>
+using GoogleTestFixture = ::testing::Test;
 
 TEST(Terrain, PrintPoint)
 {
@@ -38,7 +39,7 @@ TEST(Terrain, ConnectedComponents)
     EXPECT_EQ(cc[0].size(), 200);
 }
 
-class RandomlyGeneratedTerrain : public ::testing::Test
+class RandomlyGeneratedTerrain : public GoogleTestFixture
 {
 protected:
     RandomlyGeneratedTerrain() : m_rng(engine::RandomNumberGenerator::fixed_seed), m_terrain(generate_terrain(m_rng))
