@@ -1,5 +1,5 @@
 # Set target name
-set(POTATO_TARGET starch)
+set(POTATO_TARGET backyard)
 message("Configuring ${POTATO_TARGET}")
 
 # Add sources

@@ -1,5 +1,5 @@
 # Set target name
-set(POTATO_TARGET starch_test)
+set(POTATO_TARGET backyard_test)
 message("Configuring ${POTATO_TARGET}")
 
 # Add sources
@@ -26,5 +26,5 @@ add_subdirectory(
 target_include_directories(${POTATO_TARGET} SYSTEM PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../external/googletest/googletest/include)
 
 # Link to main target
-target_link_libraries(${POTATO_TARGET} starch)
+target_link_libraries(${POTATO_TARGET} backyard)
 target_link_libraries(${POTATO_TARGET} gtest_main)
