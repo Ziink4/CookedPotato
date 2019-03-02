@@ -10,6 +10,6 @@ public:
     HelloApplication(const Wt::WEnvironment & env);
 
 private:
-    Wt::WLineEdit * nameEdit;
+    Wt::WLineEdit * name_edit;
     Wt::WText * greeting;
 };
