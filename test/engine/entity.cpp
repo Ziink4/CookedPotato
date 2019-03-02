@@ -1,9 +1,8 @@
-#include <engine/terrain.h> // For engine::Terrain
+#include <engine/terrain.h>
 #include <engine/directions.h>
-#include <engine/rng.h> // For engine::RandomNumberGenerator
-#include <engine/obstacle.h> // For engine::Obstacle
-#include <engine/character.h> // For engine::Character
-#include <engine/search.h> // For engine::Character
+#include <engine/rng.h>
+#include <engine/obstacle.h>
+#include <engine/character.h>
 
 #include <gtest/gtest.h>
 

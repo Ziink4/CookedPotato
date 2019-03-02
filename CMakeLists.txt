@@ -7,6 +7,5 @@ add_subdirectory(cmake)
 project(potato VERSION 1.0.0 LANGUAGES CXX)
 
 # Add targets
-add_subdirectory(engine)
-add_subdirectory(engine-test)
-add_subdirectory(ui)
+add_subdirectory(src)
+add_subdirectory(test)

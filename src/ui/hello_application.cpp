@@ -1,19 +1,7 @@
-#include <Wt/WApplication.h>
-#include <Wt/WBreak.h>
+#include "hello_application.h"
+
 #include <Wt/WContainerWidget.h>
-#include <Wt/WLineEdit.h>
 #include <Wt/WPushButton.h>
-#include <Wt/WText.h>
-
-class HelloApplication : public Wt::WApplication
-{
-public:
-    HelloApplication(const Wt::WEnvironment & env);
-
-private:
-    Wt::WLineEdit * nameEdit;
-    Wt::WText * greeting;
-};
 
 HelloApplication::HelloApplication(const Wt::WEnvironment & env)
     : Wt::WApplication(env)
@@ -30,12 +18,4 @@ HelloApplication::HelloApplication(const Wt::WEnvironment & env)
         greeting->setText("Hello there, " + nameEdit->text());
     };
     button->clicked().connect(greet);
-}
-
-int main(int argc, char ** argv)
-{
-    return Wt::WRun(argc, argv, [](const Wt::WEnvironment & env)
-    {
-      return std::make_unique<HelloApplication>(env);
-    });
 }

@@ -1,26 +1,10 @@
 #include <engine/terrain.h>
-#include <engine/directions.h>
 #include <engine/rng.h>
-#include <engine/obstacle.h> 
-#include <engine/character.h> 
-#include <engine/search.h>
 
-#include <iostream>
+#include <gameplay/search.h>
 
 #include <gtest/gtest.h>
 using GoogleTestFixture = ::testing::Test;
-
-TEST(Terrain, PrintPoint)
-{
-    constexpr engine::Point<std::size_t> pt{5, 3};
-    std::cout << pt << "\n";
-}
-
-TEST(Terrain, PrintTerrain)
-{
-    const engine::Terrain t{};
-    std::cout << t << "\n";
-}
 
 TEST(Terrain, ConnectedComponents)
 {

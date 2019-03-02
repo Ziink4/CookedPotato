@@ -1,5 +1,6 @@
 #include "search.h"
-#include "directions.h"
+
+#include <engine/directions.h>
 
 #include <stack>
 #include <iostream>

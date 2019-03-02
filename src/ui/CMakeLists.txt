@@ -4,16 +4,16 @@ message("Configuring ${POTATO_TARGET}")
 
 # Add sources
 add_executable(${POTATO_TARGET}
+    hello_application.cpp
     main.cpp
 )
 
 potato_setup_compile_options(TARGET ${POTATO_TARGET})
 
 # Include headers
-target_include_directories(${POTATO_TARGET} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-
-# Include external headers
-target_include_directories(${POTATO_TARGET} SYSTEM PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/external)
+target_include_directories(${POTATO_TARGET} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(${POTATO_TARGET} PRIVATE ${PROJECT_SOURCE_DIR}/include/ui/)
+target_include_directories(${POTATO_TARGET} SYSTEM PRIVATE ${PROJECT_SOURCE_DIR}/include/)
 
 # Add Boost for Wt
 set(Boost_USE_STATIC_LIBS OFF)
