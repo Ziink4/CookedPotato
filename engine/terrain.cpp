@@ -5,7 +5,7 @@
 namespace engine
 {
 
-std::ostream& operator<<(std::ostream& out, const Terrain& t) noexcept
+std::ostream & operator<<(std::ostream & out, const Terrain & t) noexcept
 {
     Point<std::size_t> pt;
 
@@ -33,7 +33,7 @@ std::ostream& operator<<(std::ostream& out, const Terrain& t) noexcept
     return out << "\n";
 }
 
-std::ostream& operator<<(std::ostream& out, const CardinalDirections& d) noexcept
+std::ostream & operator<<(std::ostream & out, const CardinalDirections & d) noexcept
 {
     out << "Directions(";
     if (d.north) out << "north = " << *d.north;

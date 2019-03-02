@@ -7,7 +7,7 @@
 namespace engine
 {
 
-std::vector<std::vector<Point<std::size_t>>> connected_components(const Terrain& t)
+std::vector<std::vector<Point<std::size_t>>> connected_components(const Terrain & t)
 {
     // Mark all the cells as not visited
     std::array<bool, terrain_area> visited = {};

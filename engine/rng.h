@@ -29,7 +29,7 @@ public:
         m_rng = generator(m_seed);
     }
 
-    generator& rand() noexcept { return m_rng; }
+    generator & rand() noexcept { return m_rng; }
 };
 
 } // namespace engine

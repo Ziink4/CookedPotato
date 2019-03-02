@@ -6,7 +6,7 @@
 namespace engine
 {
 
-void Character::print_symbol(std::ostream& out) const noexcept
+void Character::print_symbol(std::ostream & out) const noexcept
 {
     switch (m_type)
     {
@@ -19,7 +19,7 @@ void Character::print_symbol(std::ostream& out) const noexcept
     }
 }
 
-void Character::print_summary(std::ostream& out) const noexcept
+void Character::print_summary(std::ostream & out) const noexcept
 {
     out << " [" << this << "] ";
     out << "Character(";
@@ -50,7 +50,7 @@ void Character::receive_damage(int raw_damage)
     std::cout << " [" << this << "] " << remaining_damage << " Health lost\n";
 }
 
-void Character::use_weapon(std::size_t item_id, Character& target)
+void Character::use_weapon(std::size_t item_id, Character & target)
 {
     auto selected_weapon = m_inventory.at(item_id);
 

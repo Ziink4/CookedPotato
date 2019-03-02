@@ -20,7 +20,7 @@ struct CardinalDirections
     std::optional<Point<std::size_t>> south;
     std::optional<Point<std::size_t>> west;
 
-    bool operator==(const CardinalDirections& other) const noexcept
+    bool operator==(const CardinalDirections & other) const noexcept
     {
         return (north == other.north)
             && (east == other.east)
@@ -108,10 +108,10 @@ constexpr std::size_t terrain_area = terrain_width * terrain_height;
 
 using Terrain = GenericTerrain<terrain_width, terrain_height>;
 
-std::ostream& operator<<(std::ostream& out, const Terrain& t) noexcept;
+std::ostream & operator<<(std::ostream & out, const Terrain & t) noexcept;
 
-Terrain generate_terrain(RandomNumberGenerator& rng) noexcept;
+Terrain generate_terrain(RandomNumberGenerator & rng) noexcept;
 
-std::vector<std::vector<Point<std::size_t>>> split_field(Terrain& t, std::size_t parts) noexcept;
+std::vector<std::vector<Point<std::size_t>>> split_field(Terrain & t, std::size_t parts) noexcept;
 
 } // namespace engine

@@ -8,7 +8,7 @@
 namespace engine
 {
 
-Terrain generate_terrain(RandomNumberGenerator& rng) noexcept
+Terrain generate_terrain(RandomNumberGenerator & rng) noexcept
 {
     static const auto density = 0.25;
     static std::bernoulli_distribution distribution(density);
@@ -23,7 +23,7 @@ Terrain generate_terrain(RandomNumberGenerator& rng) noexcept
     return t;
 }
 
-std::vector<std::vector<Point<std::size_t>>> split_field(Terrain& t, std::size_t parts) noexcept
+std::vector<std::vector<Point<std::size_t>>> split_field(Terrain & t, std::size_t parts) noexcept
 {
     std::vector<std::vector<Point<std::size_t>>> spawns(parts);
 
