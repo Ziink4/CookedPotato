@@ -112,6 +112,4 @@ std::ostream & operator<<(std::ostream & out, const Terrain & t) noexcept;
 
 Terrain generate_terrain(RandomNumberGenerator & rng) noexcept;
 
-std::vector<std::vector<Point<std::size_t>>> split_field(Terrain & t, std::size_t parts) noexcept;
-
 } // namespace engine

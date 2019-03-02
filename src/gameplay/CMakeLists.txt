@@ -5,6 +5,7 @@ message("Configuring ${POTATO_TARGET}")
 # Add sources
 add_library(${POTATO_TARGET}
     search.cpp
+    split_terrain.cpp
 )
 
 potato_setup_compile_options(TARGET ${POTATO_TARGET})

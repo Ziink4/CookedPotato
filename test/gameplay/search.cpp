@@ -2,6 +2,7 @@
 #include <engine/rng.h>
 
 #include <gameplay/search.h>
+#include <gameplay/split_terrain.h>
 
 #include <gtest/gtest.h>
 using GoogleTestFixture = ::testing::Test;
@@ -45,21 +46,21 @@ TEST_F(RandomlyGeneratedTerrain, PrintTerrain)
 TEST_F(RandomlyGeneratedTerrain, SplitField4AndPrint)
 {
     auto& t = get_terrain();
-    const auto spawns = engine::split_field(t, 4);
+    const auto spawns = gameplay::split_field(t, 4);
     std::cout << t << "\n";
 }
 
 TEST_F(RandomlyGeneratedTerrain, SplitField6AndPrint)
 {
     auto& t = get_terrain();
-    const auto spawns = engine::split_field(t, 6);
+    const auto spawns = gameplay::split_field(t, 6);
     std::cout << t << "\n";
 }
 
 TEST_F(RandomlyGeneratedTerrain, SplitField8AndPrint)
 {
     auto& t = get_terrain();
-    const auto spawns = engine::split_field(t, 8);
+    const auto spawns = gameplay::split_field(t, 8);
     std::cout << t << "\n";
 }
 
