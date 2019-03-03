@@ -4,9 +4,7 @@
 
 #include <vector>
 
-namespace engine
+namespace gameplay
 {
-
-std::vector<std::vector<Point<std::size_t>>> connected_components(const Terrain& t);
-
+    std::vector<std::vector<engine::Point<std::size_t>>> connected_components(const engine::Terrain & t);
 }

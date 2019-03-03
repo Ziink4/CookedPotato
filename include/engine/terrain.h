@@ -110,6 +110,4 @@ using Terrain = GenericTerrain<terrain_width, terrain_height>;
 
 std::ostream & operator<<(std::ostream & out, const Terrain & t) noexcept;
 
-Terrain generate_terrain(RandomNumberGenerator & rng) noexcept;
-
 } // namespace engine

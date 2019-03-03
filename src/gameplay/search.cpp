@@ -5,74 +5,72 @@
 #include <stack>
 #include <iostream>
 
-namespace engine
+namespace gameplay
 {
-
-std::vector<std::vector<Point<std::size_t>>> connected_components(const Terrain & t)
-{
-    // Mark all the cells as not visited
-    std::array<bool, terrain_area> visited = {};
-
-    // Create output data structure
-    std::vector<std::vector<Point<std::size_t>>> components;
-
-    Point<std::size_t> pt;
-
-    for (pt.y = 0; pt.y < terrain_height; ++pt.y)
+    std::vector<std::vector<engine::Point<std::size_t>>> connected_components(const engine::Terrain & t)
     {
-        for (pt.x = 0; pt.x < terrain_width; ++pt.x)
+        // Mark all the cells as not visited
+        std::array<bool, engine::terrain_area > visited;
+
+        // Create output data structure
+        std::vector<std::vector<engine::Point<std::size_t>>> components;
+
+        engine::Point<std::size_t> pt;
+
+        for (pt.y = 0; pt.y < engine::terrain_height; ++pt.y)
         {
-            if (t.at(pt) || visited[pt.x + pt.y * terrain_width])
+            for (pt.x = 0; pt.x < engine::terrain_width; ++pt.x)
             {
-                std::cout << "Skipping occupied/visited root cell " << pt << "\n";
-            }
-            else
-            {
-                // Create search stack
-                std::stack<Point<std::size_t>> cells_to_visit;
-                cells_to_visit.push(pt);
-
-                // Allocate current component
-                std::vector<Point<std::size_t>> current_component = {};
-
-                while (!cells_to_visit.empty())
+                if (t.at(pt) || visited[pt.x + pt.y * engine::terrain_width])
                 {
-                    auto cell = cells_to_visit.top();
-                    cells_to_visit.pop();
-
-                    if (t.at(cell) || visited[cell.x + cell.y * terrain_width])
-                    {
-                        std::cout << "Skipping invalid/occupied/visited cell " << cell << "\n";
-                    }
-                    else
-                    {
-                        // Mark the current cell as visited and store it
-                        std::cout << "Visited " << cell << "\n";
-                        visited[cell.x + cell.y * terrain_width] = true;
-                        current_component.push_back(cell);
-
-                        auto neighbors = t.neighbors(cell);
-                        auto neighbors2 = get_directions(cell);
-
-                        if (!(neighbors == neighbors2)) throw;
-
-                        std::cout << "Exploring " << neighbors << " from " << cell << "\n";
-
-                        if (neighbors.north) cells_to_visit.push(*neighbors.north);
-                        if (neighbors.east)  cells_to_visit.push(*neighbors.east);
-                        if (neighbors.south) cells_to_visit.push(*neighbors.south);
-                        if (neighbors.west)  cells_to_visit.push(*neighbors.west);
-
-                    }
+                    std::cout << "Skipping occupied/visited root cell " << pt << "\n";
                 }
+                else
+                {
+                    // Create search stack
+                    std::stack<engine::Point<std::size_t>> cells_to_visit;
+                    cells_to_visit.push(pt);
 
-                if (!current_component.empty())
-                    components.push_back(std::move(current_component));
+                    // Allocate current component
+                    std::vector<engine::Point<std::size_t>> current_component;
+
+                    while (!cells_to_visit.empty())
+                    {
+                        auto cell = cells_to_visit.top();
+                        cells_to_visit.pop();
+
+                        if (t.at(cell) || visited[cell.x + cell.y * engine::terrain_width])
+                        {
+                            std::cout << "Skipping invalid/occupied/visited cell " << cell << "\n";
+                        }
+                        else
+                        {
+                            // Mark the current cell as visited and store it
+                            std::cout << "Visited " << cell << "\n";
+                            visited[cell.x + cell.y * engine::terrain_width] = true;
+                            current_component.push_back(cell);
+
+                            auto neighbors = t.neighbors(cell);
+                            auto neighbors2 = engine::get_directions(cell);
+
+                            if (!(neighbors == neighbors2)) throw;
+
+                            std::cout << "Exploring " << neighbors << " from " << cell << "\n";
+
+                            if (neighbors.north) cells_to_visit.push(*neighbors.north);
+                            if (neighbors.east)  cells_to_visit.push(*neighbors.east);
+                            if (neighbors.south) cells_to_visit.push(*neighbors.south);
+                            if (neighbors.west)  cells_to_visit.push(*neighbors.west);
+
+                        }
+                    }
+
+                    if (!current_component.empty())
+                        components.push_back(std::move(current_component));
+                }
             }
         }
+
+        return components;
     }
-
-    return components;
-}
-
 } // namespace engine

@@ -4,7 +4,6 @@ message("Configuring ${POTATO_TARGET}")
 
 # Add sources
 add_library(${POTATO_TARGET}
-    main.cpp
     terrain.cpp
     entity.cpp
     character.cpp
