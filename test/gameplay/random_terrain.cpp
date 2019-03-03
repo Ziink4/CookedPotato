@@ -90,4 +90,3 @@ TEST_F(RandomlyGeneratedTerrain, ConnectedComponents)
     EXPECT_EQ(cc[0].size(), 8);
     EXPECT_EQ(cc[1].size(), 150);
 }
-

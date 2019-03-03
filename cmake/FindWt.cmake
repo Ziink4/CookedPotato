@@ -160,4 +160,3 @@ ELSE(Wt_DEBUG_FOUND)
         MESSAGE(FATAL_ERROR "Could NOT find Wt debug libraries")
     ENDIF(Wt_FIND_REQUIRED_Debug)
 ENDIF(Wt_DEBUG_FOUND)
-
