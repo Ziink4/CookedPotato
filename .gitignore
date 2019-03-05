@@ -1,21 +1,11 @@
-# Executables
-lexer
+# C++
+build*
+
+# CLion
+/.idea
+
+# Visual Studio
+/.vs
 
 # Visual Studio Code
 .vscode
-
-# Rust
-target/
-Cargo.lock
-
-# C++
-build*
-cpp/CMakeLists\.txt\.user*
-
-# CLion
-cpp/cmake-build-debug/
-\.idea/
-
-# Visual Studio
-/cpp/.vs
-/.vs
