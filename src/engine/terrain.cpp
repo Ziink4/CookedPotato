@@ -7,7 +7,7 @@ namespace engine
 
 std::ostream & operator<<(std::ostream & out, const Terrain & t) noexcept
 {
-    Point<std::size_t> pt;
+    point<std::size_t> pt;
 
     for (pt.y = 0; pt.y < terrain_height; ++pt.y)
     {
