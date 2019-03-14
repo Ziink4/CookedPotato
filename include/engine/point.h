@@ -8,13 +8,12 @@ namespace engine
 template <class T>
 struct Point
 {
-    T x;
-    T y;
+	T x;
+	T y;
 };
 
-
 template <class T>
-constexpr bool operator ==(const Point<T> & a, const Point<T> & b) noexcept
+constexpr bool operator==(const Point<T> & a, const Point<T> & b) noexcept
 {
     return (a.x == b.x) && (a.y == b.y);
 }
