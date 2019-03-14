@@ -7,7 +7,7 @@
 namespace engine
 {
 
-constexpr CardinalDirections get_directions(Point<std::size_t> pt) noexcept
+constexpr CardinalDirections get_directions(point<std::size_t> pt) noexcept
 {
     /* The map can be split into different cell types depending on the oddity of the height
         * With even height

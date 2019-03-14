@@ -2,9 +2,9 @@
 
 namespace gameplay
 {
-    std::vector<std::vector<engine::Point<std::size_t>>> split_field(engine::Terrain & t, std::size_t parts) noexcept
+    std::vector<std::vector<engine::point<std::size_t>>> split_field(engine::Terrain & t, std::size_t parts) noexcept
     {
-        std::vector<std::vector<engine::Point<std::size_t>>> spawns(parts);
+        std::vector<std::vector<engine::point<std::size_t>>> spawns(parts);
 
         static const double width = engine::terrain_width;
         static const double height = engine::terrain_height;
@@ -23,7 +23,7 @@ namespace gameplay
         static const auto end_x = static_cast<std::size_t>(half_width + radius_x);
         static const auto end_y = static_cast<std::size_t>(half_height + radius_y);
 
-        engine::Point<std::size_t> pt{ 0, 0 };
+        engine::point<std::size_t> pt{ 0, 0 };
 
         for (pt.y = start_y; pt.y < end_y; ++pt.y)
         {

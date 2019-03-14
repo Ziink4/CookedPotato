@@ -11,7 +11,7 @@ using GoogleTestFixture = ::testing::Test;
 
 TEST(Terrain, PrintPoint)
 {
-    constexpr engine::Point<std::size_t> pt{5, 3};
+    constexpr engine::point<std::size_t> pt{5, 3};
     std::cout << pt << "\n";
 }
 

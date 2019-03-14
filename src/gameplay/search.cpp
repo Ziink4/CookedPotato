@@ -7,15 +7,15 @@
 
 namespace gameplay
 {
-    std::vector<std::vector<engine::Point<std::size_t>>> connected_components(const engine::Terrain & t)
+    std::vector<std::vector<engine::point<std::size_t>>> connected_components(const engine::Terrain & t)
     {
         // Mark all the cells as not visited
         std::array<bool, engine::terrain_area > visited;
 
         // Create output data structure
-        std::vector<std::vector<engine::Point<std::size_t>>> components;
+        std::vector<std::vector<engine::point<std::size_t>>> components;
 
-        engine::Point<std::size_t> pt;
+        engine::point<std::size_t> pt;
 
         for (pt.y = 0; pt.y < engine::terrain_height; ++pt.y)
         {
@@ -28,11 +28,11 @@ namespace gameplay
                 else
                 {
                     // Create search stack
-                    std::stack<engine::Point<std::size_t>> cells_to_visit;
+                    std::stack<engine::point<std::size_t>> cells_to_visit;
                     cells_to_visit.push(pt);
 
                     // Allocate current component
-                    std::vector<engine::Point<std::size_t>> current_component;
+                    std::vector<engine::point<std::size_t>> current_component;
 
                     while (!cells_to_visit.empty())
                     {

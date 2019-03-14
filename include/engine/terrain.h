@@ -15,10 +15,10 @@ namespace engine
 
 struct CardinalDirections
 {
-    std::optional<Point<std::size_t>> north;
-    std::optional<Point<std::size_t>> east;
-    std::optional<Point<std::size_t>> south;
-    std::optional<Point<std::size_t>> west;
+    std::optional<point<std::size_t>> north;
+    std::optional<point<std::size_t>> east;
+    std::optional<point<std::size_t>> south;
+    std::optional<point<std::size_t>> west;
 
     bool operator==(const CardinalDirections & other) const noexcept
     {
@@ -36,7 +36,7 @@ class GenericTerrain
 public:
     using element_type = Entity;
 
-    using point_type = Point<std::size_t>;
+    using point_type = point<std::size_t>;
 
     std::array<std::unique_ptr<element_type>, width * height> elements;
 
