@@ -11,7 +11,7 @@ using GoogleTestFixture = ::testing::Test;
 
 TEST(Entity, CreatePlayerAndTerrain)
 {
-    engine::RandomNumberGenerator rng{ engine::RandomNumberGenerator::fixed_seed };
+    engine::random_number_engine rng{ engine::random_number_engine::fixed_seed };
 
     engine::Terrain t = gameplay::generate_terrain(rng);
     std::cout << t << "\n";
@@ -33,7 +33,7 @@ class RandomlyGeneratedTerrain : public GoogleTestFixture
 {
 protected:
     RandomlyGeneratedTerrain()
-        : m_rng{ engine::RandomNumberGenerator::fixed_seed }
+        : m_rng{ engine::random_number_engine::fixed_seed }
         , m_terrain{ gameplay::generate_terrain(m_rng) }
     {
     }
@@ -41,7 +41,7 @@ protected:
     auto& get_terrain() { return m_terrain; }
 
 private:
-    engine::RandomNumberGenerator m_rng;
+    engine::random_number_engine m_rng;
     engine::Terrain m_terrain;
 };
 

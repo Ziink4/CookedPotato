@@ -1,10 +1,16 @@
 #pragma once
 
-#include <engine/terrain.h>
+namespace engine
+{
+    
+class random_number_engine;
+class Terrain;
 
-class engine::RandomNumberGenerator;
+} // namespace gameplay
 
 namespace gameplay
 {
-    engine::Terrain generate_terrain(engine::RandomNumberGenerator & rng) noexcept;
+
+engine::Terrain generate_terrain(engine::random_number_engine & rng, double density = 0.25) noexcept;
+
 } // namespace gameplay
