@@ -38,7 +38,7 @@ protected:
     {
     }
 
-    auto& get_terrain() { return m_terrain; }
+    engine::Terrain & get_terrain() { return m_terrain; }
 
 private:
     engine::random_number_engine m_rng;
@@ -52,28 +52,28 @@ TEST_F(RandomlyGeneratedTerrain, PrintTerrain)
 
 TEST_F(RandomlyGeneratedTerrain, SplitField4AndPrint)
 {
-    auto & t = get_terrain();
+    engine::Terrain & t = get_terrain();
     const auto spawns = gameplay::split_field(t, 4);
     std::cout << t << "\n";
 }
 
 TEST_F(RandomlyGeneratedTerrain, SplitField6AndPrint)
 {
-    auto & t = get_terrain();
+    engine::Terrain & t = get_terrain();
     const auto spawns = gameplay::split_field(t, 6);
     std::cout << t << "\n";
 }
 
 TEST_F(RandomlyGeneratedTerrain, SplitField8AndPrint)
 {
-    auto & t = get_terrain();
+    engine::Terrain & t = get_terrain();
     const auto spawns = gameplay::split_field(t, 8);
     std::cout << t << "\n";
 }
 
 TEST_F(RandomlyGeneratedTerrain, ConnectedComponents)
 {
-    const auto & t = get_terrain();
+    const engine::Terrain & t = get_terrain();
     std::cout << t << "\n";
 
     const auto cc = gameplay::connected_components(t);

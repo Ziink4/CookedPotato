@@ -52,7 +52,7 @@ void Character::receive_damage(int raw_damage)
 
 void Character::use_weapon(std::size_t item_id, Character & target)
 {
-    auto selected_weapon = m_inventory.at(item_id);
+    const Item & selected_weapon = m_inventory.at(item_id);
 
     std::cout << " [" << this << "] " << "Using item " << item_id << " on" << " [" << &target << "] \n";
 

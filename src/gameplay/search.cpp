@@ -50,8 +50,8 @@ namespace gameplay
                             visited[cell.x + cell.y * engine::terrain_width] = true;
                             current_component.push_back(cell);
 
-                            auto neighbors = t.neighbors(cell);
-                            auto neighbors2 = engine::get_directions(cell);
+                            const engine::CardinalDirections neighbors = t.neighbors(cell);
+                            const engine::CardinalDirections neighbors2 = engine::get_directions(cell);
 
                             if (!(neighbors == neighbors2)) throw;
 

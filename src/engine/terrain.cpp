@@ -17,7 +17,7 @@ std::ostream & operator<<(std::ostream & out, const Terrain & t) noexcept
 
         for (pt.x = 0; pt.x < terrain_width; ++pt.x)
         {
-            auto entity = t.at(pt);
+            const Entity * const entity = t.at(pt);
 
             if (entity)
                 entity->print_symbol(out);
