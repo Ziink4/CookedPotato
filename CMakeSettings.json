@@ -9,7 +9,7 @@
       "buildRoot": "${workspaceRoot}\\msvc\\build\\${name}",
       "installRoot": "${workspaceRoot}\\msvc\\install\\${name}",
       "cmakeCommandArgs": "-DBOOST_ROOT=C:\\PotatoLibs\\boost_1_69_0 -DWT_ROOT=C:\\PotatoLibs\\Wt_4_0_5_msvs2017_x64 -DPOTATO_GENERATE_DOC=ON",
-      "buildCommandArgs": "-v:verbose",
+      "buildCommandArgs": "-v:minimal",
       "ctestCommandArgs": "",
       "variables": []
     },
@@ -22,7 +22,7 @@
       "buildRoot": "${workspaceRoot}\\msvc\\build\\${name}",
       "installRoot": "${workspaceRoot}\\msvc\\install\\${name}",
       "cmakeCommandArgs": "-DBOOST_ROOT=C:\\PotatoLibs\\boost_1_69_0 -DWT_ROOT=C:\\PotatoLibs\\Wt_4_0_5_msvs2017_x64 -DPOTATO_GENERATE_DOC=ON",
-      "buildCommandArgs": "-v:verbose",
+      "buildCommandArgs": "-v:minimal",
       "ctestCommandArgs": "",
       "variables": []
     }
