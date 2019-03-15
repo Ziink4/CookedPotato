@@ -1,3 +1,5 @@
+/// @file rng.h
+
 #pragma once
 
 #include <random>
@@ -49,7 +51,7 @@ public:
         m_rne = generator_type{ seed };
     }
 
-    /// Advances the engine's state and returns the generated value .
+    /// Advances the engine's state and returns the generated value.
     /// @return A random value in the closed interval [@ref min(), @ref max()]. Has amortized constant complexity.
     result_type operator()() noexcept { return m_rne(); }
 };
