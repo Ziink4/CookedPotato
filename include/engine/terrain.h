@@ -106,7 +106,7 @@ constexpr std::size_t terrain_width = 10;
 constexpr std::size_t terrain_height = 20;
 constexpr std::size_t terrain_area = terrain_width * terrain_height;
 
-using Terrain = GenericTerrain<terrain_width, terrain_height>;
+class Terrain : public GenericTerrain<terrain_width, terrain_height> {};
 
 std::ostream & operator<<(std::ostream & out, const Terrain & t) noexcept;
 
