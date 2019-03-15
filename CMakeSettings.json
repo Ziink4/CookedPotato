@@ -1,17 +1,30 @@
-{
+﻿{
   "configurations": [
     {
-        "name": "x64-Debug",
-        "generator": "Visual Studio 15 2017 Win64",
-        "configurationType": "Debug",
-        "inheritEnvironments": [
-            "msvc_x64_x64"
-        ],
-        "buildRoot": "${workspaceRoot}\\msvc\\build\\${name}",
-        "installRoot": "${workspaceRoot}\\msvc\\install\\${name}",
-        "cmakeCommandArgs": "-DBOOST_ROOT=C:\\PotatoLibs\\boost_1_69_0 -DWT_ROOT=C:\\PotatoLibs\\Wt_4_0_5_msvs2017_x64",
-        "buildCommandArgs": "-v:minimal",
-        "ctestCommandArgs": ""
+      "name": "x64-Debug",
+      "generator": "Visual Studio 15 2017 Win64",
+      "configurationType": "Debug",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "intelliSenseMode": "windows-msvc-x64",
+      "buildRoot": "${workspaceRoot}\\msvc\\build\\${name}",
+      "installRoot": "${workspaceRoot}\\msvc\\install\\${name}",
+      "cmakeCommandArgs": "-DBOOST_ROOT=C:\\PotatoLibs\\boost_1_69_0 -DWT_ROOT=C:\\PotatoLibs\\Wt_4_0_5_msvs2017_x64 -DPOTATO_GENERATE_DOC=ON",
+      "buildCommandArgs": "-v:verbose",
+      "ctestCommandArgs": "",
+      "variables": []
+    },
+    {
+      "name": "x64-Release",
+      "generator": "Visual Studio 15 2017 Win64",
+      "configurationType": "RelWithDebInfo",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "intelliSenseMode": "windows-msvc-x64",
+      "buildRoot": "${workspaceRoot}\\msvc\\build\\${name}",
+      "installRoot": "${workspaceRoot}\\msvc\\install\\${name}",
+      "cmakeCommandArgs": "-DBOOST_ROOT=C:\\PotatoLibs\\boost_1_69_0 -DWT_ROOT=C:\\PotatoLibs\\Wt_4_0_5_msvs2017_x64 -DPOTATO_GENERATE_DOC=ON",
+      "buildCommandArgs": "-v:verbose",
+      "ctestCommandArgs": "",
+      "variables": []
     }
   ]
 }
