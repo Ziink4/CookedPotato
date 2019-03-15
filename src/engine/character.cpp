@@ -1,5 +1,6 @@
 #include "character.h"
-#include "symbol.h"
+
+#include <engine/symbol.h>
 
 #include <iostream>
 
