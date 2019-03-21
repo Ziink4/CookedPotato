@@ -12,9 +12,6 @@ template <class CoordinateType>
 class vector_2d
 {
 public:
-    /// Creates an empty @ref vector_2d.
-    constexpr vector_2d() = default;
-
     /// Creates and initializes a @ref vector_2d.
     /// @param v0 Initialization value of the first coordinate.
     /// @param v1 Initialization value of the second coordinate.
@@ -68,12 +65,6 @@ public:
     /// @return A new @ref vector_2d with the result of the division.
     friend constexpr vector_2d operator/(const vector_2d & lhs, const CoordinateType & val) noexcept { return { lhs.m_values[0] / val, lhs.m_values[1] / val }; }
 
-    /// Hadamard (element-wise) product.
-    /// @param lhs Left operand.
-    /// @param rhs Right operand.
-    /// @return A new @ref vector_2d with its coordinates resulting of the element-wise multiplication of the parameters.
-    friend constexpr vector_2d hadamard_product(const vector_2d & lhs, const vector_2d & rhs) noexcept { return { lhs.m_values[0] * rhs.m_values[0], lhs.m_values[1] * rhs.m_values[1] }; }
-    
     /// Stream output.
     /// @param out The output stream.
     /// @param vec The vector to output.
@@ -91,7 +82,10 @@ template <class CoordinateType>
 class cartesian_vector_2d : public vector_2d<CoordinateType>
 {
 public:
-    using vector_2d<CoordinateType>::vector_2d;
+    /// Creates and initializes a @ref cartesian_vector_2d.
+    /// @param v0 Initialization value of the first coordinate.
+    /// @param v1 Initialization value of the second coordinate.
+    constexpr explicit cartesian_vector_2d(const CoordinateType & v0, const CoordinateType & v1) : vector_2d{ v0, v1 } {};
 
     /// Gets the x coordinate.
     /// @return The x coordinate.
@@ -116,7 +110,10 @@ template <class CoordinateType>
 class polar_vector_2d : public vector_2d<CoordinateType>
 {
 public:
-    using vector_2d<CoordinateType>::vector_2d;
+    /// Creates and initializes a @ref polar_vector_2d.
+    /// @param v0 Initialization value of the first coordinate.
+    /// @param v1 Initialization value of the second coordinate.
+    constexpr explicit polar_vector_2d(const CoordinateType & v0, const CoordinateType & v1) : vector_2d{ v0, v1 } {};
 
     /// Gets the rho coordinate.
     /// @return The rho coordinate.
@@ -140,10 +137,11 @@ public:
 /// @param vec The @ref cartesian_vector_2d to convert.
 /// @return A new @ref polar_vector_2d representing @ref vec in polar space.
 template <class CoordinateType>
-constexpr polar_vector_2d<CoordinateType> to_polar(cartesian_vector_2d<CoordinateType> vec) noexcept
+polar_vector_2d<CoordinateType> to_polar(cartesian_vector_2d<CoordinateType> vec) noexcept
 {
-    // TODO : Implement this
-    return { vec.x(), vec.y() };
+    const CoordinateType rho = std::sqrt(vec.x() * vec.x() + vec.y() * vec.y());
+    const CoordinateType theta = std::atan2(vec.y(), vec.x());
+    return polar_vector_2d{ rho, theta };
 }
 
 /// Converts a @ref polar_vector_2d to a @ref cartesian_vector_2d.
@@ -151,10 +149,11 @@ constexpr polar_vector_2d<CoordinateType> to_polar(cartesian_vector_2d<Coordinat
 /// @param vec The @ref polar_vector_2d to convert.
 /// @return A new @ref cartesian_vector_2d representing @ref vec in cartesian space.
 template <class CoordinateType>
-constexpr cartesian_vector_2d<CoordinateType> to_cartesian(polar_vector_2d<CoordinateType> vec) noexcept
+cartesian_vector_2d<CoordinateType> to_cartesian(polar_vector_2d<CoordinateType> vec) noexcept
 {
-    // TODO : Implement this
-    return { vec.rho(), vec.theta() };
+    const CoordinateType x = vec.rho() * std::cos(vec.theta());
+    const CoordinateType y = vec.rho() * std::sin(vec.theta());
+    return cartesian_vector_2d{ x, y };
 }
 
 } // namespace engine
