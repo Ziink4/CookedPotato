@@ -72,6 +72,9 @@ public:
     friend std::ostream & operator<<(std::ostream & out, const vector_2d & vec) noexcept { return out << "vector_2d(" << vec.m_values[0] << ", " << vec.m_values[1] << ")"; }
 
 protected:
+    /// Default constructor
+    constexpr vector_2d() noexcept = default;
+
     /// The actual values
     CoordinateType m_values[2];
 };
@@ -104,6 +107,16 @@ public:
     constexpr void y(const CoordinateType & y) noexcept { m_values[1] = y; }
 };
 
+/// Cartesian vector magnitude.
+/// @tparam CoordinateType The type of the coordinates.
+/// @param vec The @ref cartesian_vector_2d to calculate the magnitude of.
+/// @return The magnitude of the @ref cartesian_vector_2d.
+template <class CoordinateType>
+CoordinateType magnitude(const cartesian_vector_2d<CoordinateType> & vec) noexcept { return static_cast<CoordinateType>(std::sqrt(vec.x() * vec.x() + vec.y() * vec.y())); }
+
+/// The Pi constant
+const double pi = std::acos(-1.0);
+
 /// A 2D vector in polar space.
 /// @tparam CoordinateType The type of the coordinates.
 template <class CoordinateType>
@@ -113,7 +126,11 @@ public:
     /// Creates and initializes a @ref polar_vector_2d.
     /// @param v0 Initialization value of the first coordinate.
     /// @param v1 Initialization value of the second coordinate.
-    constexpr explicit polar_vector_2d(const CoordinateType & v0, const CoordinateType & v1) noexcept : vector_2d{ v0, v1 } {};
+    explicit polar_vector_2d(const CoordinateType & v0, const CoordinateType & v1) noexcept
+    {
+        rho(v0);
+        theta(v1);
+    }
 
     /// Gets the rho coordinate.
     /// @return The rho coordinate.
@@ -129,8 +146,15 @@ public:
 
     /// Sets a new theta coordinate.
     /// @param theta The new coordinate.
-    constexpr void theta(const CoordinateType & theta) noexcept { m_values[1] = theta; }
+    void theta(const CoordinateType & theta) noexcept { m_values[1] = std::fmod(theta, (2 * pi)); }
 };
+
+/// Polar vector magnitude.
+/// @tparam CoordinateType The type of the coordinates.
+/// @param vec The @ref polar_vector_2d to calculate the magnitude of.
+/// @return The magnitude of the @ref polar_vector_2d.
+template <class CoordinateType>
+CoordinateType magnitude(const polar_vector_2d<CoordinateType> & vec) noexcept { return std::abs(vec.rho()); }
 
 /// Converts a @ref cartesian_vector_2d to a @ref polar_vector_2d.
 /// @tparam CoordinateType The type of the coordinates.
@@ -139,7 +163,7 @@ public:
 template <class CoordinateType>
 polar_vector_2d<CoordinateType> to_polar(const cartesian_vector_2d<CoordinateType> & vec) noexcept
 {
-    const CoordinateType rho = std::sqrt(vec.x() * vec.x() + vec.y() * vec.y());
+    const CoordinateType rho = magnitude(vec);
     const CoordinateType theta = std::atan2(vec.y(), vec.x());
     return polar_vector_2d{ rho, theta };
 }
@@ -155,5 +179,23 @@ cartesian_vector_2d<CoordinateType> to_cartesian(const polar_vector_2d<Coordinat
     const CoordinateType y = vec.rho() * std::sin(vec.theta());
     return cartesian_vector_2d{ x, y };
 }
+
+/// Cartesian vector specialization for integer type.
+using car_vec2i = cartesian_vector_2d<int>;
+
+/// Cartesian vector specialization for unsigned integer type.
+using car_vec2u = cartesian_vector_2d<unsigned int>;
+
+/// Cartesian vector specialization for single-precision floating point type.
+using car_vec2f = cartesian_vector_2d<float>;
+
+/// Cartesian vector specialization for double-precision floating point type.
+using car_vec2d = cartesian_vector_2d<double>;
+
+/// Polar vector specialization for single-precision floating point type.
+using pol_vec2f = polar_vector_2d<float>;
+
+/// Polar vector specialization for double-precision floating point type.
+using pol_vec2d = polar_vector_2d<double>;
 
 } // namespace engine

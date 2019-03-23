@@ -73,29 +73,43 @@ TEST(Vector2D, ScalarDivision)
 
 TEST(Vector2D, CartesianCoordinates)
 {
-    constexpr engine::cartesian_vector_2d<int> a{ 5, -3 };
+    constexpr engine::car_vec2i a{ 5, -3 };
 
     EXPECT_EQ(a.x(), 5);
     EXPECT_EQ(a.y(), -3);
 }
 
-TEST(Vector2D, PolarCoordinates)
+TEST(Vector2D, CartesianMagnitude)
 {
-    constexpr engine::polar_vector_2d<int> a{ 5, -3 };
+    constexpr engine::car_vec2i a{ 3, -4 };
 
-    EXPECT_EQ(a.rho(), 5);
-    EXPECT_EQ(a.theta(), -3);
+    EXPECT_EQ(magnitude(a), 5);
 }
 
 constexpr double epsilon = 1e-9;
 
+TEST(Vector2D, PolarCoordinates)
+{
+    engine::pol_vec2d a{ 5.0, -3.0 * engine::pi };
+
+    EXPECT_NEAR(a.rho(), 5.0, epsilon);
+    EXPECT_NEAR(a.theta(), -engine::pi, epsilon);
+}
+
+TEST(Vector2D, PolarMagnitude)
+{
+    engine::pol_vec2d a{ 3.0, -4.0 };
+
+    EXPECT_NEAR(magnitude(a), 3.0, epsilon);
+}
+
 TEST(Vector2D, PolarToCartesian)
 {
-    constexpr engine::polar_vector_2d<double> a{ 5.0, -3.0 };
+    engine::pol_vec2d a{ 5.0, -3.0 };
 
-    constexpr engine::cartesian_vector_2d<double> b{ -4.949962483, -0.70560004029 };
+    constexpr engine::car_vec2d b{ -4.949962483, -0.70560004029 };
 
-    engine::cartesian_vector_2d<double> c = engine::to_cartesian(a);
+    engine::car_vec2d c = engine::to_cartesian(a);
 
     EXPECT_NEAR(b.x(), c.x(), epsilon);
     EXPECT_NEAR(b.y(), c.y(), epsilon);
@@ -103,11 +117,11 @@ TEST(Vector2D, PolarToCartesian)
 
 TEST(Vector2D, CartesianToPolar)
 {
-    constexpr engine::cartesian_vector_2d<double> a{ 5.0, -3.0 };
+    constexpr engine::car_vec2d a{ 5.0, -3.0 };
 
-    constexpr engine::polar_vector_2d<double> b{ 5.83095189485, -0.5404195 };
+    engine::pol_vec2d b{ 5.83095189485, -0.5404195 };
 
-    engine::polar_vector_2d<double> c = engine::to_polar(a);
+    engine::pol_vec2d c = engine::to_polar(a);
 
     EXPECT_NEAR(b.rho(), c.rho(), epsilon);
     EXPECT_NEAR(b.theta(), c.theta(), epsilon);
