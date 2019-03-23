@@ -1,10 +1,10 @@
-#include "random_terrain.h"
-
-#include <random>
+#include <gameplay/random_terrain.h>
 
 #include <engine/rng.h>
 #include <engine/terrain.h>
 #include <engine/obstacle.h>
+
+#include <random>
 
 namespace gameplay
 {

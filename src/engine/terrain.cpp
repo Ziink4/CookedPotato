@@ -1,6 +1,7 @@
-#include "terrain.h"
-#include "directions.h"
-#include "symbol.h"
+#include <engine/terrain.h>
+
+#include <engine/symbol.h>
+#include <engine/directions.h>
 
 namespace engine
 {

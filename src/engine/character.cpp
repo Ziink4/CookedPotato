@@ -1,4 +1,4 @@
-#include "character.h"
+#include <engine/character.h>
 
 #include <engine/symbol.h>
 

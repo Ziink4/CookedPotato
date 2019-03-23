@@ -1,5 +1,6 @@
-#include "obstacle.h"
-#include "symbol.h"
+#include <engine/obstacle.h>
+
+#include <engine/symbol.h>
 
 #include <ostream>
 

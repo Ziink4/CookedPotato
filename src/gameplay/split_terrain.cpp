@@ -1,4 +1,4 @@
-#include "split_terrain.h"
+#include <gameplay/split_terrain.h>
 
 namespace gameplay
 {
