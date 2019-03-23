@@ -5,23 +5,20 @@
 namespace engine
 {
 
-template <class T>
 struct point
 {
-	T x;
-	T y;
+	unsigned int x;
+	unsigned int y;
 };
 
-template <class T>
-constexpr bool operator==(const point<T> & a, const point<T> & b) noexcept
+constexpr bool operator==(const point & a, const point & b) noexcept
 {
     return (a.x == b.x) && (a.y == b.y);
 }
 
-template <class T>
-std::ostream & operator<<(std::ostream & out, const point<T> & pt) noexcept
+inline std::ostream & operator<<(std::ostream & out, const point & pt) noexcept
 {
-        return out << "point(" << pt.x << ", " << pt.y << ")";
+    return out << "point(" << pt.x << ", " << pt.y << ")";
 }
 
 } // namespace engine
