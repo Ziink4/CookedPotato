@@ -12,6 +12,7 @@ add_library(${POTATO_TARGET}
 potato_setup_compile_options(TARGET ${POTATO_TARGET})
 
 # Include headers
+target_include_directories(${POTATO_TARGET} SYSTEM PRIVATE ${PROJECT_SOURCE_DIR}/src/)
 target_include_directories(${POTATO_TARGET} SYSTEM PRIVATE ${PROJECT_SOURCE_DIR}/include/)
 
 # Link to required modules

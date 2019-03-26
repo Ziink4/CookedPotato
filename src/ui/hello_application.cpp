@@ -1,4 +1,4 @@
-#include "hello_application.h"
+#include <ui/hello_application.h>
 
 #include <Wt/WContainerWidget.h>
 #include <Wt/WPushButton.h>
