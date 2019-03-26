@@ -18,7 +18,7 @@ class GenericTerrain
 public:
     std::array<std::unique_ptr<Entity>, TerrainWidth * TerrainHeight> elements;
 
-    const Entity * const at(const point & pt) const noexcept
+    const Entity * const at(const point & pt) const noexcept    
     {
         return elements.at(pt.x + pt.y * TerrainWidth).get();
     }
@@ -39,15 +39,15 @@ public:
     auto end() { return elements.end(); }
     auto cend() const { return elements.cend(); }
 
-	constexpr CardinalDirections neighbors(const point & pt) const noexcept
-	{
-		return get_directions_2(pt, { TerrainWidth, TerrainHeight });
-	}
+    constexpr CardinalDirections neighbors(const point & pt) const noexcept
+    {
+        return get_directions_2(pt, { TerrainWidth, TerrainHeight });
+    }
 
-	constexpr size size() const noexcept { return { TerrainWidth, TerrainHeight }; }
-	constexpr unsigned width() const noexcept { return TerrainWidth; }
-	constexpr unsigned height() const noexcept { return TerrainHeight; }
-	constexpr unsigned area() const noexcept { return TerrainWidth * TerrainHeight; }
+    constexpr size size() const noexcept { return { TerrainWidth, TerrainHeight }; }
+    constexpr unsigned width() const noexcept { return TerrainWidth; }
+    constexpr unsigned height() const noexcept { return TerrainHeight; }
+    constexpr unsigned area() const noexcept { return TerrainWidth * TerrainHeight; }
 };
 
 class Terrain : public GenericTerrain<10, 20> {};

@@ -11,7 +11,7 @@ set(DOXYGEN_GENERATE_TREEVIEW      YES)
 
 doxygen_add_docs(${POTATO_TARGET}
     "../src"
-	"../include"
-	ALL
+    "../include"
+    ALL
     COMMENT "Generating documentation"
 )

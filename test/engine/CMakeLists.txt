@@ -6,7 +6,7 @@ message("Configuring ${POTATO_TARGET}")
 add_executable(${POTATO_TARGET}
     terrain.cpp
     entity.cpp
-	vector.cpp
+    vector.cpp
 )
 
 potato_setup_compile_options(TARGET ${POTATO_TARGET})

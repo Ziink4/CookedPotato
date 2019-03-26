@@ -10,7 +10,7 @@ namespace gameplay
     std::vector<std::vector<engine::point>> connected_components(const engine::Terrain & t)
     {
         // Mark all the cells as not visited
-		std::vector<bool> visited(t.area());
+        std::vector<bool> visited(t.area());
 
         // Create output data structure
         std::vector<std::vector<engine::point>> components;
@@ -51,7 +51,7 @@ namespace gameplay
                             current_component.push_back(cell);
 
                             const engine::CardinalDirections neighbors = t.neighbors(cell);
-							const engine::CardinalDirections neighbors2 = engine::get_directions(cell, t.size());
+                            const engine::CardinalDirections neighbors2 = engine::get_directions(cell, t.size());
 
                             if (!(neighbors == neighbors2)) throw;
 

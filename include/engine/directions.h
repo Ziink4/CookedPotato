@@ -10,32 +10,32 @@ namespace engine
 
 struct CardinalDirections
 {
-	std::optional<point> north;
-	std::optional<point> east;
-	std::optional<point> south;
-	std::optional<point> west;
+    std::optional<point> north;
+    std::optional<point> east;
+    std::optional<point> south;
+    std::optional<point> west;
 };
 
 constexpr bool operator==(const CardinalDirections & lhs, const CardinalDirections & rhs) noexcept
 {
-	return (lhs.north == rhs.north)
-		&& (lhs.east == rhs.east)
-		&& (lhs.south == rhs.south)
-		&& (lhs.west == rhs.west);
+    return (lhs.north == rhs.north)
+        && (lhs.east == rhs.east)
+        && (lhs.south == rhs.south)
+        && (lhs.west == rhs.west);
 }
 
 inline std::ostream & operator<<(std::ostream & out, const CardinalDirections & d) noexcept
 {
-	out << "Directions(";
-	if (d.north) out << "north = " << *d.north;
-	out << ", ";
-	if (d.east) out << "east = " << *d.east;
-	out << ", ";
-	if (d.south) out << "south = " << *d.south;
-	out << ", ";
-	if (d.west) out << "west = " << *d.west;
-	out << ")";
-	return out;
+    out << "Directions(";
+    if (d.north) out << "north = " << *d.north;
+    out << ", ";
+    if (d.east) out << "east = " << *d.east;
+    out << ", ";
+    if (d.south) out << "south = " << *d.south;
+    out << ", ";
+    if (d.west) out << "west = " << *d.west;
+    out << ")";
+    return out;
 }
 
 constexpr CardinalDirections get_directions(const point & pt, const size & sz) noexcept
@@ -128,42 +128,42 @@ constexpr CardinalDirections get_directions(const point & pt, const size & sz) n
 
 constexpr CardinalDirections get_directions_2(const point & pt, const size & sz) noexcept
 {
-	CardinalDirections d;
+    CardinalDirections d;
 
-	if (pt.y % 2 == 0)
-	{
-		d = { {{pt.x, pt.y - 1}}, {{pt.x, pt.y + 1}}, {{pt.x - 1, pt.y + 1}}, {{pt.x - 1, pt.y - 1}} };
+    if (pt.y % 2 == 0)
+    {
+        d = { {{pt.x, pt.y - 1}}, {{pt.x, pt.y + 1}}, {{pt.x - 1, pt.y + 1}}, {{pt.x - 1, pt.y - 1}} };
 
-		if (pt.x == 0)
-		{
-			d.south.reset();
-			d.west.reset();
-		}
-	}
-	else // pt.y % 2 == 1
-	{
-		d = { {{pt.x + 1, pt.y - 1}}, {{pt.x + 1, pt.y + 1}}, {{pt.x, pt.y + 1}}, {{pt.x, pt.y - 1}} };
+        if (pt.x == 0)
+        {
+            d.south.reset();
+            d.west.reset();
+        }
+    }
+    else // pt.y % 2 == 1
+    {
+        d = { {{pt.x + 1, pt.y - 1}}, {{pt.x + 1, pt.y + 1}}, {{pt.x, pt.y + 1}}, {{pt.x, pt.y - 1}} };
 
-		if (pt.x == sz.width - 1)
-		{
-			d.north.reset();
-			d.east.reset();
-		}
-	}
+        if (pt.x == sz.width - 1)
+        {
+            d.north.reset();
+            d.east.reset();
+        }
+    }
 
-	if (pt.y == 0)
-	{
-		d.north.reset();
-		d.west.reset();
-	}
+    if (pt.y == 0)
+    {
+        d.north.reset();
+        d.west.reset();
+    }
 
-	if (pt.y == sz.width - 1)
-	{
-		d.east.reset();
-		d.south.reset();
-	}
+    if (pt.y == sz.width - 1)
+    {
+        d.east.reset();
+        d.south.reset();
+    }
 
-	return d;
+    return d;
 }
 
 } // namespace engine
