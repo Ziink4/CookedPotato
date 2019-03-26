@@ -1,56 +1,35 @@
 #pragma once
 
-#include "entity.h"
-#include "point.h"
-
-#include "rng.h"
+#include <engine/rng.h>
+#include <engine/point.h>
+#include <engine/entity.h>
 
 #include <array>
 #include <ostream>
 #include <optional>
 
-
 namespace engine
 {
 
-struct CardinalDirections
-{
-    std::optional<point> north;
-    std::optional<point> east;
-    std::optional<point> south;
-    std::optional<point> west;
-
-    bool operator==(const CardinalDirections & other) const noexcept
-    {
-        return (north == other.north)
-            && (east == other.east)
-            && (south == other.south)
-            && (west == other.west);
-    }
-};
-
-
-template <std::size_t width, std::size_t height>
+template <unsigned width, unsigned height>
 class GenericTerrain
 {
 public:
     using element_type = Entity;
 
-    using point_type = point;
-
     std::array<std::unique_ptr<element_type>, width * height> elements;
 
-    const auto at(point_type pt) const noexcept
+    const auto at(const point & pt) const noexcept
     {
         return elements.at(pt.x + pt.y * width).get();
     }
 
-    void place_entity(std::unique_ptr<element_type>&& other, point_type pt)
+    void place_entity(std::unique_ptr<element_type>&& other, const point & pt)
     {
         elements.at(pt.x + pt.y * width) = std::move(other);
     }
 
-    void remove_entity(point_type pt)
+    void remove_entity(const point & pt)
     {
         elements.at(pt.x + pt.y * width).reset();
     }
@@ -61,50 +40,15 @@ public:
     auto end() { return elements.end(); }
     auto cend() const { return elements.cend(); }
 
-    CardinalDirections neighbors(point_type pt) const noexcept
-    {
-        CardinalDirections d;
-
-        if (pt.y % 2 == 0)
-        {
-            d = {{{pt.x, pt.y - 1}}, {{pt.x, pt.y + 1}}, {{pt.x - 1, pt.y + 1}}, {{pt.x - 1, pt.y - 1}}};
-
-            if (pt.x == 0)
-            {
-                d.south.reset();
-                d.west.reset();
-            }
-        }
-        else
-        {
-            d = {{{pt.x + 1, pt.y - 1}}, {{pt.x + 1, pt.y + 1}}, {{pt.x, pt.y + 1}}, {{pt.x, pt.y - 1}}};
-
-            if (pt.x == width - 1)
-            {
-                d.north.reset();
-                d.east.reset();
-            }
-        }
-
-        if (pt.y == 0)
-        {
-            d.north.reset();
-            d.west.reset();
-        }
-
-        if (pt.y == height - 1)
-        {
-            d.east.reset();
-            d.south.reset();
-        }
-
-        return d;
-    }
+	CardinalDirections neighbors(const point & pt) const noexcept
+	{
+		return get_directions_2(pt);
+	}
 };
 
-constexpr std::size_t terrain_width = 10;
-constexpr std::size_t terrain_height = 20;
-constexpr std::size_t terrain_area = terrain_width * terrain_height;
+constexpr unsigned terrain_width = 10;
+constexpr unsigned terrain_height = 20;
+constexpr unsigned terrain_area = terrain_width * terrain_height;
 
 class Terrain : public GenericTerrain<terrain_width, terrain_height> {};
 

@@ -1,13 +1,29 @@
 #pragma once
 
-#include "terrain.h"
+#include <engine/terrain.h>
 
 #include <optional>
 
 namespace engine
 {
 
-constexpr CardinalDirections get_directions(point pt) noexcept
+struct CardinalDirections
+{
+	std::optional<point> north;
+	std::optional<point> east;
+	std::optional<point> south;
+	std::optional<point> west;
+};
+
+constexpr bool operator==(const CardinalDirections & lhs, const CardinalDirections & rhs) noexcept
+{
+	return (lhs.north == rhs.north)
+		&& (lhs.east == rhs.east)
+		&& (lhs.south == rhs.south)
+		&& (lhs.west == rhs.west);
+}
+
+constexpr CardinalDirections get_directions(const point & pt) noexcept
 {
     /* The map can be split into different cell types depending on the oddity of the height
         * With even height
@@ -95,6 +111,46 @@ constexpr CardinalDirections get_directions(point pt) noexcept
     return {std::nullopt, std::nullopt, std::nullopt, std::nullopt};
 }
 
-std::ostream& operator<<(std::ostream& out, const CardinalDirections& d) noexcept;
+constexpr CardinalDirections get_directions_2(const point & pt) noexcept
+{
+	CardinalDirections d;
+
+	if (pt.y % 2 == 0)
+	{
+		d = { {{pt.x, pt.y - 1}}, {{pt.x, pt.y + 1}}, {{pt.x - 1, pt.y + 1}}, {{pt.x - 1, pt.y - 1}} };
+
+		if (pt.x == 0)
+		{
+			d.south.reset();
+			d.west.reset();
+		}
+	}
+	else // pt.y % 2 == 1
+	{
+		d = { {{pt.x + 1, pt.y - 1}}, {{pt.x + 1, pt.y + 1}}, {{pt.x, pt.y + 1}}, {{pt.x, pt.y - 1}} };
+
+		if (pt.x == terrain_width - 1)
+		{
+			d.north.reset();
+			d.east.reset();
+		}
+	}
+
+	if (pt.y == 0)
+	{
+		d.north.reset();
+		d.west.reset();
+	}
+
+	if (pt.y == terrain_width - 1)
+	{
+		d.east.reset();
+		d.south.reset();
+	}
+
+	return d;
+}
+
+std::ostream & operator<<(std::ostream & out, const CardinalDirections & d) noexcept;
 
 } // namespace engine
