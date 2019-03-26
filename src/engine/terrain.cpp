@@ -1,7 +1,6 @@
 #include <engine/terrain.h>
 
 #include <engine/symbol.h>
-#include <engine/directions.h>
 
 namespace engine
 {
@@ -10,13 +9,13 @@ std::ostream & operator<<(std::ostream & out, const Terrain & t) noexcept
 {
     point pt;
 
-    for (pt.y = 0; pt.y < terrain_height; ++pt.y)
+    for (pt.y = 0; pt.y < t.height(); ++pt.y)
     {
         out << " ";
 
         if (pt.y % 2 == 1) out << "  ";
 
-        for (pt.x = 0; pt.x < terrain_width; ++pt.x)
+        for (pt.x = 0; pt.x < t.width(); ++pt.x)
         {
             const Entity * const entity = t.at(pt);
 
@@ -32,20 +31,6 @@ std::ostream & operator<<(std::ostream & out, const Terrain & t) noexcept
     }
 
     return out << "\n";
-}
-
-std::ostream & operator<<(std::ostream & out, const CardinalDirections & d) noexcept
-{
-    out << "Directions(";
-    if (d.north) out << "north = " << *d.north;
-    out << ", ";
-    if (d.east) out << "east = " << *d.east;
-    out << ", ";
-    if (d.south) out << "south = " << *d.south;
-    out << ", ";
-    if (d.west) out << "west = " << *d.west;
-    out << ")";
-    return out;
 }
 
 } // namespace engine

@@ -3,6 +3,7 @@
 #include <engine/rng.h>
 #include <engine/point.h>
 #include <engine/entity.h>
+#include <engine/directions.h>
 
 #include <array>
 #include <ostream>
@@ -11,27 +12,25 @@
 namespace engine
 {
 
-template <unsigned width, unsigned height>
+template <unsigned TerrainWidth, unsigned TerrainHeight>
 class GenericTerrain
 {
 public:
-    using element_type = Entity;
+    std::array<std::unique_ptr<Entity>, TerrainWidth * TerrainHeight> elements;
 
-    std::array<std::unique_ptr<element_type>, width * height> elements;
-
-    const auto at(const point & pt) const noexcept
+    const Entity * const at(const point & pt) const noexcept
     {
-        return elements.at(pt.x + pt.y * width).get();
+        return elements.at(pt.x + pt.y * TerrainWidth).get();
     }
 
-    void place_entity(std::unique_ptr<element_type>&& other, const point & pt)
+    void place_entity(std::unique_ptr<Entity>&& other, const point & pt)
     {
-        elements.at(pt.x + pt.y * width) = std::move(other);
+        elements.at(pt.x + pt.y * TerrainWidth) = std::move(other);
     }
 
     void remove_entity(const point & pt)
     {
-        elements.at(pt.x + pt.y * width).reset();
+        elements.at(pt.x + pt.y * TerrainWidth).reset();
     }
 
     auto begin() { return elements.begin(); }
@@ -40,17 +39,18 @@ public:
     auto end() { return elements.end(); }
     auto cend() const { return elements.cend(); }
 
-	CardinalDirections neighbors(const point & pt) const noexcept
+	constexpr CardinalDirections neighbors(const point & pt) const noexcept
 	{
-		return get_directions_2(pt);
+		return get_directions_2(pt, { TerrainWidth, TerrainHeight });
 	}
+
+	constexpr size size() const noexcept { return { TerrainWidth, TerrainHeight }; }
+	constexpr unsigned width() const noexcept { return TerrainWidth; }
+	constexpr unsigned height() const noexcept { return TerrainHeight; }
+	constexpr unsigned area() const noexcept { return TerrainWidth * TerrainHeight; }
 };
 
-constexpr unsigned terrain_width = 10;
-constexpr unsigned terrain_height = 20;
-constexpr unsigned terrain_area = terrain_width * terrain_height;
-
-class Terrain : public GenericTerrain<terrain_width, terrain_height> {};
+class Terrain : public GenericTerrain<10, 20> {};
 
 std::ostream & operator<<(std::ostream & out, const Terrain & t) noexcept;
 

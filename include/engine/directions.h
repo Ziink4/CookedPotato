@@ -1,6 +1,7 @@
 #pragma once
 
-#include <engine/terrain.h>
+#include <engine/size.h>
+#include <engine/point.h>
 
 #include <optional>
 
@@ -23,7 +24,21 @@ constexpr bool operator==(const CardinalDirections & lhs, const CardinalDirectio
 		&& (lhs.west == rhs.west);
 }
 
-constexpr CardinalDirections get_directions(const point & pt) noexcept
+inline std::ostream & operator<<(std::ostream & out, const CardinalDirections & d) noexcept
+{
+	out << "Directions(";
+	if (d.north) out << "north = " << *d.north;
+	out << ", ";
+	if (d.east) out << "east = " << *d.east;
+	out << ", ";
+	if (d.south) out << "south = " << *d.south;
+	out << ", ";
+	if (d.west) out << "west = " << *d.west;
+	out << ")";
+	return out;
+}
+
+constexpr CardinalDirections get_directions(const point & pt, const size & sz) noexcept
 {
     /* The map can be split into different cell types depending on the oddity of the height
         * With even height
@@ -71,17 +86,17 @@ constexpr CardinalDirections get_directions(const point & pt) noexcept
         return {std::nullopt, {{pt.x, pt.y + 1}}, {{pt.x - 1, pt.y + 1}}, std::nullopt};
     }
 
-    if (pt.y == terrain_height - 1)
+    if (pt.y == sz.height - 1)
     {
-        if constexpr (terrain_height % 2 == 0)
+        if (sz.height % 2 == 0)
         {
             // West only (7)
-            if (pt.x == terrain_width - 1) return {std::nullopt, std::nullopt, std::nullopt, {{pt.x, pt.y - 1}}};
+            if (pt.x == sz.width - 1) return {std::nullopt, std::nullopt, std::nullopt, {{pt.x, pt.y - 1}}};
             // West and North only (6)
             return {{{pt.x + 1, pt.y - 1}}, std::nullopt, std::nullopt, {{pt.x, pt.y - 1}}};
         }
 
-        if constexpr (terrain_height % 2 == 1)
+        if (sz.height % 2 == 1)
         {
             // North only (8)
             if (pt.x == 0) return {{{pt.x, pt.y - 1}}, std::nullopt, std::nullopt, std::nullopt};
@@ -102,7 +117,7 @@ constexpr CardinalDirections get_directions(const point & pt) noexcept
     if (pt.y % 2 == 1)
     {
         // West and South only (5)
-        if (pt.x == terrain_width - 1) return {std::nullopt, std::nullopt, {{pt.x, pt.y + 1}}, {{pt.x, pt.y - 1}}};
+        if (pt.x == sz.width - 1) return {std::nullopt, std::nullopt, {{pt.x, pt.y + 1}}, {{pt.x, pt.y - 1}}};
         // 4-Way (4)
         return {{{pt.x + 1, pt.y - 1}}, {{pt.x + 1, pt.y + 1}}, {{pt.x, pt.y + 1}}, {{pt.x, pt.y - 1}}};
     }
@@ -111,7 +126,7 @@ constexpr CardinalDirections get_directions(const point & pt) noexcept
     return {std::nullopt, std::nullopt, std::nullopt, std::nullopt};
 }
 
-constexpr CardinalDirections get_directions_2(const point & pt) noexcept
+constexpr CardinalDirections get_directions_2(const point & pt, const size & sz) noexcept
 {
 	CardinalDirections d;
 
@@ -129,7 +144,7 @@ constexpr CardinalDirections get_directions_2(const point & pt) noexcept
 	{
 		d = { {{pt.x + 1, pt.y - 1}}, {{pt.x + 1, pt.y + 1}}, {{pt.x, pt.y + 1}}, {{pt.x, pt.y - 1}} };
 
-		if (pt.x == terrain_width - 1)
+		if (pt.x == sz.width - 1)
 		{
 			d.north.reset();
 			d.east.reset();
@@ -142,7 +157,7 @@ constexpr CardinalDirections get_directions_2(const point & pt) noexcept
 		d.west.reset();
 	}
 
-	if (pt.y == terrain_width - 1)
+	if (pt.y == sz.width - 1)
 	{
 		d.east.reset();
 		d.south.reset();
@@ -150,7 +165,5 @@ constexpr CardinalDirections get_directions_2(const point & pt) noexcept
 
 	return d;
 }
-
-std::ostream & operator<<(std::ostream & out, const CardinalDirections & d) noexcept;
 
 } // namespace engine
