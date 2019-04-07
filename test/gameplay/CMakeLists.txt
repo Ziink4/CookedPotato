@@ -6,6 +6,7 @@ message("Configuring ${POTATO_TARGET}")
 add_executable(${POTATO_TARGET}
     search.cpp
     random_terrain.cpp
+	game_flow.cpp
 )
 
 potato_setup_compile_options(TARGET ${POTATO_TARGET})
