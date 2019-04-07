@@ -12,3 +12,6 @@ build*
 
 # Documentation
 /doc/html
+
+# Animate Output
+/animate/output
