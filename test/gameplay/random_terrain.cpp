@@ -9,12 +9,14 @@
 #include <gtest/gtest.h>
 using GoogleTestFixture = ::testing::Test;
 
-TEST(Entity, CreatePlayerAndTerrain)
+struct RandomlyGeneratedTerrain : public GoogleTestFixture
 {
-    engine::random_number_engine rng{ engine::random_number_engine::fixed_seed };
+    engine::Terrain terrain = gameplay::generate_terrain(engine::random_number_engine{ engine::random_number_engine::default_seed });
+};
 
-    engine::Terrain t = gameplay::generate_terrain(rng);
-    std::cout << t << "\n";
+TEST_F(RandomlyGeneratedTerrain, CreatePlayerAndTerrain)
+{
+    std::cout << terrain << "\n";
 
     engine::Character player1{ engine::Character::type::player };
     engine::Character player2{ engine::Character::type::player };
@@ -28,65 +30,44 @@ TEST(Entity, CreatePlayerAndTerrain)
     std::cout << player2 << "\n";
 }
 
-
-class RandomlyGeneratedTerrain : public GoogleTestFixture
-{
-protected:
-    RandomlyGeneratedTerrain()
-        : m_rng{ engine::random_number_engine::fixed_seed }
-        , m_terrain{ gameplay::generate_terrain(m_rng) }
-    {
-    }
-
-    engine::Terrain & get_terrain() { return m_terrain; }
-
-private:
-    engine::random_number_engine m_rng;
-    engine::Terrain m_terrain;
-};
-
 TEST_F(RandomlyGeneratedTerrain, PrintTerrain)
 {
-    std::cout << get_terrain() << "\n";
+    std::cout << terrain << "\n";
 }
 
 TEST_F(RandomlyGeneratedTerrain, SplitField4AndPrint)
 {
-    engine::Terrain & t = get_terrain();
-    const auto spawns = gameplay::split_field(t, 4);
-    std::cout << t << "\n";
+    const auto spawns = gameplay::split_field(terrain, 4);
+    std::cout << terrain << "\n";
 }
 
 TEST_F(RandomlyGeneratedTerrain, SplitField6AndPrint)
 {
-    engine::Terrain & t = get_terrain();
-    const auto spawns = gameplay::split_field(t, 6);
-    std::cout << t << "\n";
+    const auto spawns = gameplay::split_field(terrain, 6);
+    std::cout << terrain << "\n";
 }
 
 TEST_F(RandomlyGeneratedTerrain, SplitField8AndPrint)
 {
-    engine::Terrain & t = get_terrain();
-    const auto spawns = gameplay::split_field(t, 8);
-    std::cout << t << "\n";
+    const auto spawns = gameplay::split_field(terrain, 8);
+    std::cout << terrain << "\n";
 }
 
 TEST_F(RandomlyGeneratedTerrain, ConnectedComponents)
 {
-    const engine::Terrain & t = get_terrain();
-    std::cout << t << "\n";
+    std::cout << terrain << "\n";
 
-    const auto cc = gameplay::connected_components(t);
-
-    EXPECT_EQ(cc.size(), 2);
+    const auto cc = gameplay::connected_components(terrain);
 
     for (const auto & component : cc)
     {
         for (const auto & cell : component)
             std::cout << cell << " ";
-        std::cout << "\n";
+        std::cout << "\n\n";
     }
 
-    EXPECT_EQ(cc[0].size(), 8);
-    EXPECT_EQ(cc[1].size(), 150);
+    ASSERT_EQ(cc.size(), 3);
+    EXPECT_EQ(cc[0].size(), 152);
+    EXPECT_EQ(cc[1].size(), 2);
+    EXPECT_EQ(cc[2].size(), 1);
 }
