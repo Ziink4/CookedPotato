@@ -10,7 +10,8 @@ namespace engine
 /// Basic random number engine, with random seed by default.
 /// @details Defines a random number engine, fulfilling the UniformRandomBitGenerator concept.
 /// (See : https://en.cppreference.com/w/cpp/numeric/random/UniformRandomBitGenerator)
-/// This engine can use any standard random engine and will be constructed with a random seed by default.
+/// This engine will be constructed with a random seed by default.
+/// This engine can be used with standard random distributions.
 class random_number_engine : public std::mt19937_64
 {
 public:
