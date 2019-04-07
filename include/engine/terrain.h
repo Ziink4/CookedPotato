@@ -1,13 +1,10 @@
 #pragma once
 
-#include <engine/rng.h>
-#include <engine/point.h>
 #include <engine/entity.h>
-#include <engine/directions.h>
+#include <engine/point.h>
+#include <engine/size.h>
 
 #include <array>
-#include <ostream>
-#include <optional>
 
 namespace engine
 {
