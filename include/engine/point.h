@@ -11,14 +11,14 @@ struct point
     unsigned y;
 };
 
-constexpr bool operator==(const point & a, const point & b) noexcept
+constexpr bool operator==(const point & lhs, const point & rhs) noexcept
 {
-    return (a.x == b.x) && (a.y == b.y);
+    return (lhs.x == rhs.x) && (lhs.y == rhs.y);
 }
 
-constexpr bool operator!=(const point & a, const point & b) noexcept
+constexpr bool operator!=(const point & lhs, const point & rhs) noexcept
 {
-    return !(a == b);
+    return !(lhs == rhs);
 }
 
 inline std::ostream & operator<<(std::ostream & out, const point & pt) noexcept
