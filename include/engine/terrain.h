@@ -39,11 +39,6 @@ public:
     auto end() { return elements.end(); }
     auto cend() const { return elements.cend(); }
 
-    constexpr CardinalDirections neighbors(const point & pt) const noexcept
-    {
-        return get_directions_2(pt, { TerrainWidth, TerrainHeight });
-    }
-
     constexpr size size() const noexcept { return { TerrainWidth, TerrainHeight }; }
     constexpr unsigned width() const noexcept { return TerrainWidth; }
     constexpr unsigned height() const noexcept { return TerrainHeight; }

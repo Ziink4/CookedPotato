@@ -24,6 +24,11 @@ constexpr bool operator==(const CardinalDirections & lhs, const CardinalDirectio
         && (lhs.west == rhs.west);
 }
 
+constexpr bool operator!=(const CardinalDirections & lhs, const CardinalDirections & rhs) noexcept
+{
+    return !(lhs == rhs);
+}
+
 inline std::ostream & operator<<(std::ostream & out, const CardinalDirections & d) noexcept
 {
     out << "Directions(";
@@ -157,7 +162,7 @@ constexpr CardinalDirections get_directions_2(const point & pt, const size & sz)
         d.west.reset();
     }
 
-    if (pt.y == sz.width - 1)
+    if (pt.y == sz.height - 1)
     {
         d.east.reset();
         d.south.reset();

@@ -16,6 +16,11 @@ constexpr bool operator==(const point & a, const point & b) noexcept
     return (a.x == b.x) && (a.y == b.y);
 }
 
+constexpr bool operator!=(const point & a, const point & b) noexcept
+{
+    return !(a == b);
+}
+
 inline std::ostream & operator<<(std::ostream & out, const point & pt) noexcept
 {
     return out << "point(" << pt.x << ", " << pt.y << ")";
