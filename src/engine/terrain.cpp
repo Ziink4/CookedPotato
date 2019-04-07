@@ -22,7 +22,7 @@ std::ostream & operator<<(std::ostream & out, const Terrain & t) noexcept
             if (entity)
                 entity->print_symbol(out);
             else
-                out << Symbol::black;
+                out << symbol::black;
 
             out << "   ";
         }
