@@ -1,10 +1,9 @@
-#include <engine/terrain.h>
-#include <engine/directions.h>
-#include <engine/rng.h>
 #include <engine/obstacle.h>
 #include <engine/character.h>
 
 #include <gtest/gtest.h>
+
+#include <iostream>
 
 TEST(Entity, CreateCharacterPlayer)
 {

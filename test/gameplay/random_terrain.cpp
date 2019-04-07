@@ -9,6 +9,8 @@
 #include <gtest/gtest.h>
 using GoogleTestFixture = ::testing::Test;
 
+#include <iostream>
+
 struct RandomlyGeneratedTerrain : public GoogleTestFixture
 {
     engine::Terrain terrain = gameplay::generate_terrain(engine::random_number_engine{ engine::random_number_engine::default_seed });
@@ -61,7 +63,8 @@ TEST_F(RandomlyGeneratedTerrain, ConnectedComponents)
 
     for (const auto & component : cc)
     {
-        for (const auto & cell : component)
+        std::cout << "Component : ";
+        for (const engine::point & cell : component)
             std::cout << cell << " ";
         std::cout << "\n\n";
     }

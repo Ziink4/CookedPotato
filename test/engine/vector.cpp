@@ -1,9 +1,6 @@
 #include <engine/vector.h>
 
-#include <iostream>
-
 #include <gtest/gtest.h>
-using GoogleTestFixture = ::testing::Test;
 
 TEST(Vector2D, Equals)
 {
