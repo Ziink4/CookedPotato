@@ -1,5 +1,7 @@
 #include <gameplay/split_terrain.h>
 
+#include <engine/point.h>
+#include <engine/terrain.h>
 #include <engine/vector.h>
 
 namespace gameplay

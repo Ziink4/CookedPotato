@@ -2,9 +2,13 @@
 
 #include <Wt/WContainerWidget.h>
 #include <Wt/WPushButton.h>
+#include <Wt/WLineEdit.h>
+#include <Wt/WText.h>
 
-HelloApplication::HelloApplication(const Wt::WEnvironment & env)
-    : Wt::WApplication(env)
+namespace ui
+{
+
+hello_application::hello_application(const Wt::WEnvironment & env) : Wt::WApplication(env)
 {
     setTitle("Hello world");
 
@@ -23,3 +27,5 @@ HelloApplication::HelloApplication(const Wt::WEnvironment & env)
     };
     button->clicked().connect(greet);
 }
+
+} // namespace ui

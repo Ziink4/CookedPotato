@@ -1,5 +1,6 @@
 #include <gameplay/search.h>
 
+#include <engine/terrain.h>
 #include <engine/directions.h>
 
 #include <stack>

@@ -2,11 +2,11 @@
 
 namespace engine
 {
-    
+
 class random_number_engine;
 class Terrain;
 
-} // namespace gameplay
+} // namespace engine
 
 namespace gameplay
 {
