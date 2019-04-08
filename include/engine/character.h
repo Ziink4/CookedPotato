@@ -9,7 +9,7 @@ namespace engine
 
 struct Item
 {
-    int strength = 10;
+    int strength = 50;
 };
 
 class Spell {};
@@ -20,6 +20,9 @@ struct Statistics
     int shield = 0;
     int strength = 0;
     int defense = 0;
+	
+	int movement = 3;
+	int action = 2;
 };
 
 class Character : public Entity
@@ -33,10 +36,10 @@ public:
     };
 
 private:
-    static constexpr auto max_inventory_size = 8;
-    static constexpr auto max_spellbook_size = 8;
+    static constexpr unsigned max_inventory_size = 8;
+    static constexpr unsigned max_spellbook_size = 8;
 
-    static constexpr auto shield_damage_resistance = 0.5f;
+    static constexpr double shield_damage_resistance = 0.5;
 
     // type
     type m_type;
@@ -70,6 +73,16 @@ public:
     void print_symbol(std::ostream& out) const noexcept override;
 
     void print_summary(std::ostream& out) const noexcept override;
+
+	constexpr bool alive() const noexcept
+	{
+		return m_stats.health > 0;
+	}
+
+	constexpr bool can_move(unsigned distance = 1) const noexcept
+	{
+		return m_stats.movement >= distance;
+	}
 };
 
 } // namespace engine

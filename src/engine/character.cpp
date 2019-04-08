@@ -30,7 +30,7 @@ void Character::print_summary(std::ostream & out) const noexcept
     out << "health = " << m_stats.health;
     out << ", ";
     out << "shield = " << m_stats.shield;
-    out << ")";
+    out << ")\n";
 }
 
 void Character::receive_damage(int raw_damage)

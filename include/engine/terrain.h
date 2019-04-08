@@ -30,6 +30,11 @@ public:
         elements.at(pt.x + pt.y * TerrainWidth).reset();
     }
 
+	void move_entity(const point & origin, const point & destination)
+	{
+		elements.at(destination.x + destination.y * TerrainWidth) = std::move(elements.at(origin.x + origin.y * TerrainWidth));
+	}
+
     auto begin() { return elements.begin(); }
     auto cbegin() const { return elements.cbegin(); }
 
