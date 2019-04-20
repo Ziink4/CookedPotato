@@ -73,8 +73,8 @@ TEST(Game, BasicFlow)
     auto player_one = std::make_unique<engine::Character>(engine::Character::type::player);
     auto player_two = std::make_unique<engine::Character>(engine::Character::type::player);
 
-	engine::Character * const player_one_ref = player_one.get();
-	engine::Character * const player_two_ref = player_two.get();
+	engine::Character & player_one_ref = *player_one;
+	engine::Character & player_two_ref = *player_two;
 
     // Place players on the terrain
     terrain.place_entity(move(player_one), selected_spawn_points[0]);
@@ -87,15 +87,15 @@ TEST(Game, BasicFlow)
 	while (!stop)
 	{
 		std::cout << "Pre-turn :" << "\n";
-		player_one_ref->print_summary(std::cout);
-		player_two_ref->print_summary(std::cout);
+		player_one_ref.print_summary(std::cout);
+		player_two_ref.print_summary(std::cout);
 		std::cout << terrain << "\n";
 
-		player_one_ref->use_weapon(0, *player_two_ref);
+		player_one_ref.use_weapon(0, player_two_ref);
 
 		std::cout << "Post-turn :" << "\n";
-		player_one_ref->print_summary(std::cout);
-		player_two_ref->print_summary(std::cout);
+		player_one_ref.print_summary(std::cout);
+		player_two_ref.print_summary(std::cout);
 		std::cout << terrain << "\n";
 
 		// TODO : player movement
@@ -103,12 +103,12 @@ TEST(Game, BasicFlow)
 		// Spend one movement point
 		// Move to random neighbor ?
 
-		if (!player_one_ref->alive() || !player_two_ref->alive())
+		if (!player_one_ref.alive() || !player_two_ref.alive())
 			stop = true;
 	}
 
 	std::cout << "End-of-game :" << "\n";
-	player_one_ref->print_summary(std::cout);
-	player_two_ref->print_summary(std::cout);
+	player_one_ref.print_summary(std::cout);
+	player_two_ref.print_summary(std::cout);
 	std::cout << terrain << "\n";
 }
