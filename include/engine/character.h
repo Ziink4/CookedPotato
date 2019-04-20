@@ -79,9 +79,9 @@ public:
 		return m_stats.health > 0;
 	}
 
-	constexpr bool can_move(unsigned distance = 1) const noexcept
+	constexpr bool can_move(int distance = 1) const noexcept
 	{
-		return m_stats.movement >= distance;
+		return distance > 0 && m_stats.movement >= distance;
 	}
 };
 
