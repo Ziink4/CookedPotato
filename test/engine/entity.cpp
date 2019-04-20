@@ -7,18 +7,18 @@
 
 TEST(Entity, CreateCharacterPlayer)
 {
-    engine::Character player(engine::Character::type::player);
+    const engine::Character player(engine::Character::type::player);
     std::cout << player << "\n";
 }
 
 TEST(Entity, CreateCharacterNpc)
 {
-    engine::Character npc(engine::Character::type::npc);
+    const engine::Character npc(engine::Character::type::npc);
     std::cout << npc << "\n";
 }
 
 TEST(Entity, CreateObstacle)
 {
-    engine::Obstacle obstacle;
+    const engine::Obstacle obstacle;
     std::cout << obstacle << "\n";
 }

@@ -39,7 +39,7 @@ void Character::receive_damage(int raw_damage)
 
     std::cout << " [" << this << "] " << "Receiving " << raw_damage << " damage\n";
 
-    int absorbed_by_shield = std::min(m_stats.shield, static_cast<int>(remaining_damage * shield_damage_resistance));
+    const int absorbed_by_shield = std::min(m_stats.shield, static_cast<int>(remaining_damage * shield_damage_resistance));
 
     m_stats.shield -= absorbed_by_shield;
     remaining_damage -= static_cast<int>(absorbed_by_shield / shield_damage_resistance);

@@ -37,7 +37,7 @@ namespace gameplay
 
                     while (!cells_to_visit.empty())
                     {
-                        auto cell = cells_to_visit.top();
+                        const engine::point cell = cells_to_visit.top();
                         cells_to_visit.pop();
 
                         if (t.at(cell) || visited[cell.x + cell.y * t.width()])

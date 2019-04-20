@@ -87,7 +87,7 @@ constexpr double epsilon = 1e-9;
 
 TEST(Vector2D, PolarCoordinates)
 {
-    engine::pol_vec2d a{ 5.0, -3.0 * engine::pi };
+    const engine::pol_vec2d a{ 5.0, -3.0 * engine::pi };
 
     EXPECT_NEAR(a.rho(), 5.0, epsilon);
     EXPECT_NEAR(a.theta(), -engine::pi, epsilon);
@@ -95,18 +95,18 @@ TEST(Vector2D, PolarCoordinates)
 
 TEST(Vector2D, PolarMagnitude)
 {
-    engine::pol_vec2d a{ 3.0, -4.0 };
+    const engine::pol_vec2d a{ 3.0, -4.0 };
 
     EXPECT_NEAR(magnitude(a), 3.0, epsilon);
 }
 
 TEST(Vector2D, PolarToCartesian)
 {
-    engine::pol_vec2d a{ 5.0, -3.0 };
+    const engine::pol_vec2d a{ 5.0, -3.0 };
 
     constexpr engine::car_vec2d b{ -4.949962483, -0.70560004029 };
 
-    engine::car_vec2d c = engine::to_cartesian(a);
+    const engine::car_vec2d c = engine::to_cartesian(a);
 
     EXPECT_NEAR(b.x(), c.x(), epsilon);
     EXPECT_NEAR(b.y(), c.y(), epsilon);
@@ -116,9 +116,9 @@ TEST(Vector2D, CartesianToPolar)
 {
     constexpr engine::car_vec2d a{ 5.0, -3.0 };
 
-    engine::pol_vec2d b{ 5.83095189485, -0.5404195 };
+    const engine::pol_vec2d b{ 5.83095189485, -0.5404195 };
 
-    engine::pol_vec2d c = engine::to_polar(a);
+    const engine::pol_vec2d c = engine::to_polar(a);
 
     EXPECT_NEAR(b.rho(), c.rho(), epsilon);
     EXPECT_NEAR(b.theta(), c.theta(), epsilon);
