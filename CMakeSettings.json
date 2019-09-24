@@ -14,7 +14,7 @@
       "variables": []
     },
     {
-      "name": "x64-Release",
+      "name": "x64-RelWithDebInfo",
       "generator": "Visual Studio 15 2017 Win64",
       "configurationType": "RelWithDebInfo",
       "inheritEnvironments": [ "msvc_x64_x64" ],
