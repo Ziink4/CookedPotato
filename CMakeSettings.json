@@ -1,11 +1,10 @@
 ﻿{
-
   "environments": [
     {
       // You can set this to the location of your Boost installation
       "boostRoot": "C:\\PotatoLibs\\boost_1_71_0",
       // You can set this to the location of your Wt installation
-      "wtRoot": "C:\\PotatoLibs\\Wt-4.1.1-msvs2017-Windows-x64-SDK"
+      "wtRoot": "C:\\PotatoLibs\\Wt_4_1_1_msvs2017_Windows_x64_SDK"
     }
   ],
   "configurations": [

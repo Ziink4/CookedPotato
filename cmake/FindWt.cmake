@@ -1,162 +1,124 @@
-# Find Wt includes and libraries
+# FindWt.cmake
+# From https://gist.github.com/mologie/6755150 with some modifications
+# Copyright 2013 Oliver Kuckertz <oliver.kuckertz@mologie.de>
+# Licensed under the MIT license:
+# http://opensource.org/licenses/MIT
 #
-# This script sets the following variables:
+# Please note that this script is NOT interchangeable with Wt's original FindWt.cmake.
 #
-#  Wt_INCLUDE_DIR
-#  Wt_LIBRARIES  - Release libraries
-#  Wt_FOUND  - True if release libraries found
-#  Wt_DEBUG_LIBRARIES  - Debug libraries
-#  Wt_DEBUG_FOUND  - True if debug libraries found
+# Usage:
+#   FIND_PACKAGE(Wt [REQUIRED] [COMPONENTS ...])
 #
-# To direct the script to a particular Wt installation, use the
-# standard cmake variables CMAKE_INCLUDE_PATH and CMAKE_LIBRARY_PATH
+# - The component names equal the Wt library names, EXCLUDING THE SERVER LIBRARIES:
+#     wt
+#     wtdbo
+#     wtdbosqlite3
+#     wtdbopostgres
+#     and other Wt/DBO extensions, as long as they follow the naming scheme
+# - Select your server library using the Wt_SERVER variable. You can leave this to the user.
+#   Defaults to wthttp.
+# - Omitting COMPONENTS selects a few reasonable defaults: wt, wtdbo, wtdbosqlite3
+# - It is possible to only select DBO components by setting Wt_DBO_EXCLUSIVE to TRUE
+# - In order to use a different set of components for multiple projects, pass a list of all
+#   required components to FIND_PACKAGE, and compose a list of libraries required by each of
+#   your projects manually. Use the special Wt_SERVER_LIBRARY variable in order to include
+#   the server library selected by the user:
+#   SET(PROJECT1_WT_LIBRARIES ${Wt_WT_LIBRARY} ${Wt_WTDBO_LIBRARY} ${Wt_SERVER_LIBRARY})
 #
-# To use this script to find Wt, when using the new style for include files:
-#   #include <Wt/WLineEdit>
-#   #include <Wt/Ext/LineEdit>
-#   #include <Wt/Chart/WPieChart>
+# Quick start:
+#   FIND_PACKAGE(Wt REQUIRED COMPONENTS wt wtdbo wtdbosqlite3)
+#   INCLUDE_DIRECTORIES(${Wt_INCLUDE_DIRS})
+#   ADD_EXECUTABLE(app main.cpp)
+#   TARGET_LINK_LIBRARIES(app ${Wt_LIBRARIES})
 #
-# include the following CMake snippet in your project:
+# Input variables:
+#   Wt_SERVER        - Server implementation library
 #
-#  FIND_PACKAGE( Wt REQUIRED )
-#  INCLUDE_DIRECTORIES( ${Wt_INCLUDE_DIR} )
-#  TARGET_LINK_LIBRARIES( yourexe
-#    ${Wt_DEBUG_LIBRARY}        # or {Wt_LIBRARY}
-#    ${Wt_HTTP_DEBUG_LIBRARY}   # or {Wt_HTTP_LIBRARY}
-#    ${Wt_EXT_DEBUG_LIBRARY}    # or {Wt_EXT_LIBRARY}
-#  )
-#
-# To use this script to find Wt, when using the old include style:
-#   #include <WLineEdit>
-#   #include <Ext/LineEdit>
-#   #include <Chart/WPieChart>
-# style of include files, change the INCLUDE_DIRECTORIES statement to:
-#   INCLUDE_DIRECTORIES( ${Wt_INCLUDE_DIR} ${Wt_INCLUDE_DIR}/Wt )
-#
-#
-#
-#
-# Copyright (c) 2007, Pau Garcia i Quiles, <pgquiles@elpauer.org>
-#
-# Redistribution and use is allowed according to the terms of the BSD license.
-# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+# Output variables:
+#   Wt_INCLUDE_DIRS  - Include directories
+#   Wt_LIBRARIES     - All requested components
 
-FIND_PATH( Wt_INCLUDE_DIR NAMES Wt/WObject PATHS ENV PATH PATH_SUFFIXES include wt )
+FIND_PATH(Wt_INCLUDE_DIR NAMES Wt/WObject.h PATH_SUFFIXES include)
+MARK_AS_ADVANCED(Wt_INCLUDE_DIR)
 
-SET( Wt_FIND_COMPONENTS Release Debug )
+# Input variables
+SET(Wt_SERVER "wthttp" CACHE STRING "Wt server implementation (wthttp, wtfcgi, or wtisapi)")
+MARK_AS_ADVANCED(Wt_SERVER)
 
-FIND_LIBRARY( Wt_LIBRARY NAMES wt PATHS PATH PATH_SUFFIXES lib lib-release lib_release )
-FIND_LIBRARY( Wt_EXT_LIBRARY NAMES wtext PATHS PATH PATH_SUFFIXES lib lib-release lib_release )
-FIND_LIBRARY( Wt_HTTP_LIBRARY NAMES wthttp PATHS PATH PATH_SUFFIXES lib lib-release lib_release )
-FIND_LIBRARY( Wt_TEST_LIBRARY NAMES wttest PATHS PATH PATH_SUFFIXES lib lib-release lib_release )
-FIND_LIBRARY( Wt_FCGI_LIBRARY NAMES wtfcgi PATHS PATH PATH_SUFFIXES lib lib-release lib_release )
-FIND_LIBRARY( Wt_DBO_LIBRARY NAMES wtdbo PATHS PATH PATH_SUFFIXES lib lib-release lib_release )
-FIND_LIBRARY( Wt_DBOSQLITE3_LIBRARY NAMES wtdbosqlite3 PATHS PATH PATH_SUFFIXES lib lib-release lib_release )
-FIND_LIBRARY( Wt_DBOPOSTGRES_LIBRARY NAMES wtdbopostgres PATHS PATH PATH_SUFFIXES lib lib-release lib_release )
-FIND_LIBRARY( Wt_DBOMYSQL_LIBRARY NAMES wtdbomysql PATHS PATH PATH_SUFFIXES lib lib-release lib_release )
-FIND_LIBRARY( Wt_DBOFIREBIRD_LIBRARY NAMES wtdbofirebird PATHS PATH PATH_SUFFIXES lib lib-release lib_release )
+# Output variables
+SET(Wt_INCLUDE_DIRS ${Wt_INCLUDE_DIR})
+SET(Wt_LIBRARIES)
+SET(Wt_LIBRARIES_FOUND)
+SET(Wt_LIBRARIES_MISSING)
 
-FIND_LIBRARY( Wt_DEBUG_LIBRARY NAMES wtd wt PATHS PATH PATH_SUFFIXES lib libd lib-debug lib_debug HINTS /usr/lib/debug/usr/lib)
-FIND_LIBRARY( Wt_EXT_DEBUG_LIBRARY NAMES wtextd wtext PATHS PATH PATH_SUFFIXES lib libd lib-debug lib_debug HINTS /usr/lib/debug/usr/lib)
-FIND_LIBRARY( Wt_HTTP_DEBUG_LIBRARY NAMES wthttpd wthttp PATHS PATH PATH_SUFFIXES lib libd lib-debug lib_debug HINTS /usr/lib/debug/usr/lib)
-FIND_LIBRARY( Wt_TEST_DEBUG_LIBRARY NAMES wttestd wttest PATHS PATH PATH_SUFFIXES lib libd lib-debug lib_debug HINTS /usr/lib/debug/usr/lib)
-FIND_LIBRARY( Wt_FCGI_DEBUG_LIBRARY NAMES wtfcgid wtfcgi PATHS PATH PATH_SUFFIXES lib libd lib-debug lib_debug HINTS /usr/lib/debug/usr/lib)
-FIND_LIBRARY( Wt_DBO_DEBUG_LIBRARY NAMES wtdbod wtdbo PATHS PATH PATH_SUFFIXES lib lib-debug lib_debug HINTS /usr/lib/debug/usr/lib)
-FIND_LIBRARY( Wt_DBOSQLITE3_DEBUG_LIBRARY NAMES wtdbosqlite3d wtdbosqlite3 PATHS PATH PATH_SUFFIXES lib lib-debug lib_debug HINTS /usr/lib/debug/usr/lib)
-FIND_LIBRARY( Wt_DBOPOSTGRES_DEBUG_LIBRARY NAMES wtdbopostgresd wtdbopostgres PATHS PATH PATH_SUFFIXES lib lib-debug lib_debug HINTS /usr/lib/debug/usr/lib)
-FIND_LIBRARY( Wt_DBOMYSQL_DEBUG_LIBRARY NAMES wtdbomysqld wtdbomysql PATHS PATH PATH_SUFFIXES lib lib-debug lib_debug HINTS /usr/lib/debug/usr/lib)
-FIND_LIBRARY( Wt_DBOFIREBIRD_DEBUG_LIBRARY NAMES wtdbofirebirdd wtdbofirebird PATHS PATH PATH_SUFFIXES lib lib-debug lib_debug HINTS /usr/lib/debug/usr/lib)
+# Select the components to find
+IF(Wt_FIND_COMPONENTS)
+	SET(Wt_LIBRARIES_REQUESTED ${Wt_FIND_COMPONENTS})
+ELSE()
+	SET(Wt_LIBRARIES_REQUESTED wt)
+ENDIF()
 
-IF( Wt_LIBRARY )
-    IF( Wt_HTTP_LIBRARY )
-        SET( Wt_FOUND TRUE )
-        SET( Wt_FIND_REQUIRED_Release TRUE )
-        SET( Wt_LIBRARIES ${Wt_HTTP_LIBRARY} ${Wt_LIBRARY} )
+IF(NOT Wt_DBO_EXCLUSIVE)
+	LIST(APPEND Wt_LIBRARIES_REQUESTED ${Wt_SERVER})
+ENDIF()
 
-        IF( Wt_FCGI_LIBRARY )
-            SET( Wt_LIBRARIES ${Wt_LIBRARIES} ${Wt_FCGI_LIBRARY} )
-        ENDIF( Wt_FCGI_LIBRARY )
-    ELSE( Wt_HTTP_LIBRARY )
-        IF( Wt_FCGI_LIBRARY )
-            SET( Wt_FOUND TRUE )
-            SET( Wt_FIND_REQUIRED_Release TRUE )
-            SET( Wt_LIBRARIES ${Wt_FCGI_LIBRARY} ${Wt_LIBRARY} )
-        ENDIF( Wt_FCGI_LIBRARY )
-    ENDIF( Wt_HTTP_LIBRARY )
-ENDIF( Wt_LIBRARY )
+# Attempt to find each component
+FOREACH(_Wt_LIB_NAME ${Wt_LIBRARIES_REQUESTED})
+	STRING(TOUPPER "${_Wt_LIB_NAME}" _Wt_LIB_VAR)
+	SET(_Wt_LIB_VAR "Wt_${_Wt_LIB_VAR}_LIBRARY")
+	SET(${_Wt_LIB_VAR})
+	FIND_LIBRARY(${_Wt_LIB_VAR}_DEBUG ${_Wt_LIB_NAME}d HINTS ${Wt_ROOT} PATH_SUFFIXES lib)
+	FIND_LIBRARY(${_Wt_LIB_VAR}_RELEASE ${_Wt_LIB_NAME} HINTS ${Wt_ROOT} PATH_SUFFIXES lib)
+	MARK_AS_ADVANCED(${_Wt_LIB_VAR}_DEBUG ${_Wt_LIB_VAR}_RELEASE)
+	IF(${_Wt_LIB_VAR}_DEBUG)
+		SET(${_Wt_LIB_VAR}_DEBUG_FOUND TRUE)
+		LIST(APPEND ${_Wt_LIB_VAR} debug ${${_Wt_LIB_VAR}_DEBUG})
+	ENDIF()
+	IF(${_Wt_LIB_VAR}_RELEASE)
+		SET(${_Wt_LIB_VAR}_RELEASE_FOUND TRUE)
+		LIST(APPEND ${_Wt_LIB_VAR} optimized ${${_Wt_LIB_VAR}_RELEASE})
+	ENDIF()
+	IF(${_Wt_LIB_VAR})
+		MESSAGE(STATUS "${_Wt_LIB_VAR} = ${${_Wt_LIB_VAR}}")
+		SET(${_Wt_LIB_VAR}_FOUND TRUE)
+		LIST(APPEND Wt_LIBRARIES_FOUND ${_Wt_LIB_NAME})
+		LIST(APPEND Wt_LIBRARIES ${${_Wt_LIB_VAR}})
+	ELSE()
+		LIST(APPEND Wt_LIBRARIES_MISSING ${_Wt_LIB_NAME})
+	ENDIF()
+ENDFOREACH(_Wt_LIB_NAME ${Wt_LIBRARIES_REQUESTED})
+MESSAGE(STATUS "Wt_LIBRARIES = ${Wt_LIBRARIES}")
 
-IF( Wt_EXT_LIBRARY )
-    SET( Wt_LIBRARIES ${Wt_LIBRARIES} ${Wt_EXT_LIBRARY} )
-ENDIF( Wt_EXT_LIBRARY )
+# Store the server library's configuration in a separate variable
+STRING(TOUPPER "${Wt_SERVER}" _Wt_SERVER_UPPER)
+SET(Wt_SERVER_LIBRARY ${Wt_${_Wt_SERVER_UPPER}_LIBRARY})
+MESSAGE(STATUS "Wt_SERVER_LIBRARY = ${Wt_SERVER_LIBRARY}")
 
-IF( Wt_DBO_LIBRARY )
-    SET( Wt_LIBRARIES ${Wt_LIBRARIES} ${Wt_DBO_LIBRARY} )
-    IF( Wt_DBOSQLITE3_LIBRARY )
-        SET( Wt_LIBRARIES ${Wt_LIBRARIES} ${Wt_DBOSQLITE3_LIBRARY} )
-    ENDIF( Wt_DBOSQLITE3_LIBRARY )
-    IF( Wt_DBOPOSTGRES_LIBRARY )
-        SET( Wt_LIBRARIES ${Wt_LIBRARIES} ${Wt_DBOPOSTGRES_LIBRARY} )
-    ENDIF( Wt_DBOPOSTGRES_LIBRARY )
-    IF( Wt_DBOMYSQL_LIBRARY )
-        SET( Wt_LIBRARIES ${Wt_LIBRARIES} ${Wt_DBOMYSQL_LIBRARY} )
-    ENDIF( Wt_DBOMYSQL_LIBRARY )
-    IF ( Wt_DBOFIREBIRD_LIBRARY )
-        SET ( Wt_LIBRARIES ${Wt_LIBRARIES} ${Wt_DBOFIREBIRD_LIBRARY} )
-    ENDIF ( Wt_DBOFIREBIRD_LIBRARY )
-ENDIF( Wt_DBO_LIBRARY )
+# Determine the version number from WConfig.h
+IF(EXISTS "${Wt_INCLUDE_DIR}/Wt/WConfig.h")
+	FILE(STRINGS "${Wt_INCLUDE_DIR}/Wt/WConfig.h" Wt_VERSION_LINE REGEX "^#define WT_VERSION_STR")
+	STRING(REGEX REPLACE ".*\"(.*)\".*" "\\1" Wt_VERSION "${Wt_VERSION_LINE}")
+ELSE()
+	SET(Wt_VERSION "unknown")
+ENDIF()
 
-IF( Wt_DEBUG_LIBRARY )
-    IF ( Wt_HTTP_DEBUG_LIBRARY)
-        SET( Wt_DEBUG_FOUND TRUE )
-        SET( Wt_FIND_REQUIRED_Debug TRUE )
-        SET( Wt_DEBUG_LIBRARIES ${Wt_HTTP_DEBUG_LIBRARY} ${Wt_DEBUG_LIBRARY} )
+# Report success
+IF(NOT Wt_FIND_QUIETLY AND Wt_LIBRARIES_FOUND)
+	STRING(REPLACE ";" ", " _Wt_LIBRARIES_FOUND_STR "${Wt_LIBRARIES_FOUND}")
+	MESSAGE(STATUS "Found Wt, version ${Wt_VERSION}, with the following libraries: ${_Wt_LIBRARIES_FOUND_STR}")
+ENDIF()
 
-        IF( Wt_FCGI_DEBUG_LIBRARY )
-            SET( Wt_DEBUG_LIBRARIES ${Wt_DEBUG_LIBRARIES} ${Wt_FCGI_DEBUG_LIBRARY} )
-        ENDIF( Wt_FCGI_DEBUG_LIBRARY )
-        ELSE( Wt_HTTP_DEBUG_LIBRARY )
-            IF( Wt_FCGI_DEBUG_LIBRARY )
-                SET( Wt_DEBUG_FOUND TRUE )
-                SET( Wt_FIND_REQUIRED_Debug TRUE )
-                SET( Wt_DEBUG_LIBRARIES ${Wt_FCGI_DEBUG_LIBRARY} ${Wt_DEBUG_LIBRARY} )
-            ENDIF( Wt_FCGI_DEBUG_LIBRARY )
-        ENDIF( Wt_HTTP_DEBUG_LIBRARY)       
-ENDIF( Wt_DEBUG_LIBRARY )
+# ...and failure
+IF((NOT Wt_FIND_QUIETLY OR Wt_FIND_REQUIRED) AND Wt_LIBRARIES_MISSING)
+	STRING(REPLACE ";" ", " _Wt_LIBRARIES_MISSING_STR "${Wt_LIBRARIES_MISSING}")
+	IF(Wt_FIND_REQUIRED)
+		MESSAGE(SEND_ERROR "The following Wt libraries are required but could not be found: ${_Wt_LIBRARIES_MISSING_STR}")
+	ELSE()
+		MESSAGE("The following Wt libraries could not be found: ${_Wt_LIBRARIES_MISSING_STR}")
+	ENDIF()
+ENDIF()
 
-IF( Wt_DBO_DEBUG_LIBRARY )
-    SET( Wt_DEBUG_LIBRARIES ${Wt_DEBUG_LIBRARIES} ${Wt_DBO_DEBUG_LIBRARY} )
-    IF( Wt_DBOSQLITE3_DEBUG_LIBRARY )
-        SET( Wt_DEBUG_LIBRARIES ${Wt_DEBUG_LIBRARIES} ${Wt_DBOSQLITE3_DEBUG_LIBRARY} )
-    ENDIF( Wt_DBOSQLITE3_DEBUG_LIBRARY )
-    IF( Wt_DBOPOSTGRES_DEBUG_LIBRARY )
-        SET( Wt_DEBUG_LIBRARIES ${Wt_DEBUG_LIBRARIES} ${Wt_DBOPOSTGRES_DEBUG_LIBRARY} )
-    ENDIF( Wt_DBOPOSTGRES_DEBUG_LIBRARY )
-    IF( Wt_DBOMYSQL_DEBUG_LIBRARY )
-        SET( Wt_DEBUG_LIBRARIES ${Wt_DEBUG_LIBRARIES} ${Wt_DBOMYSQL_DEBUG_LIBRARY} )
-    ENDIF ( Wt_DBOMYSQL_DEBUG_LIBRARY )
-    IF ( Wt_DBOFIREBIRD_DEBUG_LIBRARY )
-        SET (Wt_DEBUG_LIBRARIES ${Wt_DEBUG_LIBRARIES} ${Wt_DBOFIREBIRD_DEBUG_LIBRARY} )
-    ENDIF ( Wt_DBOFIREBIRD_DEBUG_LIBRARY )
-ENDIF( Wt_DBO_DEBUG_LIBRARY )
-
-IF(Wt_FOUND)
-    IF (NOT Wt_FIND_QUIETLY)
-        MESSAGE(STATUS "Found the Wt libraries at ${Wt_LIBRARIES}")
-        MESSAGE(STATUS "Found the Wt headers at ${Wt_INCLUDE_DIR}")
-    ENDIF (NOT Wt_FIND_QUIETLY)
-ELSE(Wt_FOUND)
-    IF(Wt_FIND_REQUIRED)
-        MESSAGE(FATAL_ERROR "Could NOT find Wt")
-    ENDIF(Wt_FIND_REQUIRED)
-ENDIF(Wt_FOUND)
-
-IF(Wt_DEBUG_FOUND)
-    IF (NOT Wt_FIND_QUIETLY)
-        MESSAGE(STATUS "Found the Wt debug libraries at ${Wt_DEBUG_LIBRARIES}")
-        MESSAGE(STATUS "Found the Wt debug headers at ${Wt_INCLUDE_DIR}")
-    ENDIF (NOT Wt_FIND_QUIETLY)
-ELSE(Wt_DEBUG_FOUND)
-    IF(Wt_FIND_REQUIRED_Debug)
-        MESSAGE(FATAL_ERROR "Could NOT find Wt debug libraries")
-    ENDIF(Wt_FIND_REQUIRED_Debug)
-ENDIF(Wt_DEBUG_FOUND)
+# Succeed if all requested libraries have been found
+IF(NOT _Wt_LIBRARIES_MISSING)
+	SET(Wt_FOUND TRUE)
+ENDIF()

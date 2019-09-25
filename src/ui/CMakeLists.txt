@@ -25,15 +25,14 @@ target_include_directories(${POTATO_TARGET} SYSTEM PRIVATE ${Boost_INCLUDE_DIRS}
 target_link_libraries(${POTATO_TARGET} ${Boost_LIBRARIES})
 
 # Add Wt
-set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "${WT_ROOT}/include")
-set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "${WT_ROOT}/lib")
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "${WT_ROOT}")
 
-find_package(Wt REQUIRED)
+find_package(Wt REQUIRED COMPONENTS wt wthttp)
 
-target_include_directories(${POTATO_TARGET} SYSTEM PRIVATE ${Wt_INCLUDE_DIR})
+target_include_directories(${POTATO_TARGET} SYSTEM PRIVATE ${Wt_INCLUDE_DIRS})
 
-target_link_libraries(${POTATO_TARGET} $<$<CONFIG:Debug>:${Wt_DEBUG_LIBRARY}>)
-target_link_libraries(${POTATO_TARGET} $<$<CONFIG:Debug>:${Wt_HTTP_DEBUG_LIBRARY}>)
+target_link_libraries(${POTATO_TARGET} $<$<CONFIG:Debug>:${Wt_WT_LIBRARY_DEBUG}>)
+target_link_libraries(${POTATO_TARGET} $<$<CONFIG:Debug>:${Wt_WTHTTP_LIBRARY_DEBUG}>)
 
-target_link_libraries(${POTATO_TARGET} $<$<CONFIG:Release>:${Wt_LIBRARY}>)
-target_link_libraries(${POTATO_TARGET} $<$<CONFIG:Release>:${Wt_HTTP_LIBRARY}>)
+target_link_libraries(${POTATO_TARGET} $<$<CONFIG:Release>:${Wt_WT_LIBRARY_RELEASE}>)
+target_link_libraries(${POTATO_TARGET} $<$<CONFIG:Release>:${Wt_WTHTTP_LIBRARY_RELEASE}>)
